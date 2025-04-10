@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <link class="img" rel="icon" href="/img/gcv.jpg" type="image/x-icon">
+  <title>Thanh Toán Vé Xem Phim</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 30px;
+    }
+    .container {
+      background: white;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    h2, h3 {
+      text-align: center;
+      color: #007bff;
+    }
+    .info {
+      margin: 20px 0;
+      line-height: 1.6;
+    }
+    .info span {
+      font-weight: bold;
+    }
+    .payment-info {
+      background-color: #fff7e6;
+      padding: 15px;
+      border: 1px solid #ffc107;
+      border-radius: 6px;
+      margin-top: 20px;
+    }
+    .payment-info h3 {
+      color: #d48806;
+      text-align: left;
+    }
+    .form-control {
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Thanh Toán Vé Xem Phim</h2>
+
+    <div class="info">
+        <p><span>Họ tên:</span> <span id="tenkhachhang"></span></p>
+      <p><span>Tên phim:</span> <span id="tenphim"></span></p>
+      <p><span>Ghế đã chọn:</span> <span id="ghe"></span></p>
+      <p><span>Số lượng vé:</span> <span id="soluong"></span></p>
+      <p><span>Giá vé:</span> <span id="giave">VNĐ</span></p>
+      <p><span>Tổng tiền:</span> <span id="tongtien"></span> VNĐ</p>
+        <p><span>Tên rạp:</span> <span id="tenrap"></span></p>
+    
+    </div>
+
+    <div class="payment-info">
+      <h3>Thông Tin Chuyển Khoản</h3>
+      <p><strong>Chủ tài khoản:</strong> Hoàng Tuấn Thư</p>
+      <p><strong>Số tài khoản:</strong> 123456789001</p>
+
+      <label for="bank">Ngân hàng:</label>
+      <select id="bank" class="form-control" required>
+        <option value="">-- Chọn ngân hàng --</option>
+        <option>Vietcombank</option>
+        <option>ACB</option>
+        <option>MB Bank</option>
+        <option>BIDV</option>
+        <option>TPBank</option>
+        <option>VIB</option>
+        <option>Techcombank</option>
+      </select>
+
+      <p class="mt-3"><strong>Nội dung chuyển khoản:</strong> <span id="noidung"></span></p>
+    </div>
+
+    <button class="btn" onclick="xacNhan()">Xác Nhận Thanh Toán</button>
+    <button class="btn" onclick="window.location.href='trangchuchinh.html'">Về Trang Chủ</button>
+  </div>
+  
+  <script>
+    
+    const params = new URLSearchParams(window.location.search);
+    const hoten = params.get("tenkhachhang") || "Người đặt";
+    const tenphim = params.get("tenphim") || "Không rõ";
+    const ghe = params.get("ghe") || "";
+    const giave = params.get("giave") || "";
+    const rap = params.get("tenrap") || "Không rõ";
+
+    const gheArr = ghe.split(",").filter(x => x.trim() !== "");
+    const tongTien = gheArr.length * giave;
+    document.getElementById("tenkhachhang").innerText = hoten || "Không rõ";
+    document.getElementById("tenphim").innerText = tenphim;
+    document.getElementById("tenrap").innerText = rap;
+    document.getElementById("ghe").innerText = gheArr.join(", ");
+    document.getElementById("soluong").innerText = gheArr.length;
+    document.getElementById("giave").innerText = giave.toLocaleString() + ".000VNĐ";
+    document.getElementById("tongtien").innerText = tongTien.toLocaleString() + ".000"; 
+    document.getElementById("noidung").innerText = hoten;
+
+    function xacNhan() {
+        const params = new URLSearchParams(window.location.search);
+        const marap = params.get("tenrap"); // ví dụ: beta-my-dinh
+
+        fetch("http://localhost:3001/rapphim") // path tới JSON
+        .then(res => res.json())
+        .then(data => {
+            const matched = data.find(r => r.value === marap);
+            if (matched) {
+            document.getElementById("tenrap").innerText = matched.ten;
+            } else {
+            document.getElementById("tenrap").innerText = "Không rõ";
+            }
+        })
+        .catch(err => {
+            console.error("Không tải được danh sách rạp:", err);
+        });
+
+        const ve = {
+          tenkhachhang: hoten,
+          tenphim: tenphim,
+          gheduocchon: gheArr.join(","),
+          soluongve: gheArr.length,
+          giave: parseInt(giave),
+          ngaydatve: new Date().toLocaleDateString(),
+          tenrap: document.getElementById("tenrap").innerText,
+          tongtien: tongTien + ".000",
+          trangthai: "✅Đã thanh toán",
+        };
+        fetch('http://localhost:3001/datve', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(ve)
+          })
+
+            alert("Thanh toán thành công! Cảm ơn bạn đã đặt vé.");
+            window.location.href = "trangchuchinh.html";
+}
+      
+  </script>
+
+</body>
+</html>

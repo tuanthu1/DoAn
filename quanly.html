@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý và đặt vé xem phim</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <style>
+        /* Reset and common font */
+        body, h1, h2, h3, h4, p, ul, li, input, button, select {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        form {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f2f2f2;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="datetime-local"],
+        select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .action-btn {
+            margin: 2px;
+            padding: 5px 10px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background-color: #28a745;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Quản lý và đặt vé xem phim</h1>
+        </header>
+
+        <div class="form-section">
+            <h2>Thêm phim</h2>
+            <form id="Vephim">
+                <div class="form-group">
+                    <label for="rapphim">Rạp Phim:</label>
+                        <select id="rapphim" name="rapphim" required>
+                        <!-- Options sẽ được thêm động bằng JS -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="loaiphim">Loại Phim:</label>
+                        <select id="loaiphim" name="loaiphim" required>
+                        <!-- Options sẽ được thêm động bằng JS -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tenphim">Tên phim:</label>
+                    <input type="text" id="tenphim" name="tenphim" placeholder="Nhập tên phim" required>
+                </div>
+                <div class="form-group">
+                    <label for="giochieu">Giờ chiếu:</label>
+                    <input type="datetime-local" id="giochieu" name="giochieu" required>
+                </div>
+                <div class="form-group">
+                    <label for="gioketthuc">Giờ kết thúc:</label>
+                    <input type="datetime-local" id="gioketthuc" name="gioketthuc" required>
+                </div>
+                <div class="form-group">
+                    <label for="soluongghengoi">Số lượng ghế ngồi:</label>
+                    <input type="number" id="soluongghengoi" name="soluongghengoi" placeholder="Nhập số lượng ghế ngồi" required>
+                </div>
+                <div class="form-group">
+                    <label for="soluongghecontrong">Số lượng ghế còn trống:</label>
+                    <input type="number" id="soluongghecontrong" name="soluongghecontrong" placeholder="Nhập số lượng ghế còn trống" required>
+                </div>
+                <div class="form-group">
+                    <label for="giave">Giá vé:</label>
+                    <input type="number" id="giave" name="giave" placeholder="Nhập giá vé" required>
+                </div>
+                <div class="form-group">
+                    <label for="maphim">Mã phim:</label>
+                    <input type="number" id="maphim" name="maphim" placeholder="Nhập mã phim" required>
+                </div>
+                <div class="form-group">
+                    <label for="poster">Poster:</label>
+                    <input type="text" id="poster" name="poster" placeholder="Nhập URL của poster" required>
+                </div>
+                <button type="button" id="add-movie-btn">Thêm phim</button>
+            </form>
+        </div>
+
+        <div class="table-section">
+            <h2>Danh sách các phim</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rạp Phim</th>
+                        <th>Loại Phim</th>
+                        <th>Tên Phim</th>
+                        <th>Giờ Chiếu</th>
+                        <th>Giờ Kết Thúc</th>
+                        <th>Số Lượng Ghế Ngồi</th>
+                        <th>Số Lượng Ghế Còn Trống</th>
+                        <th>Giá Vé</th>
+                        <th>Mã Phim</th>
+                        <th>Poster</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="movie-list">
+                    <!-- Các mục phim sẽ được thêm vào đây -->
+                </tbody>
+            </table>
+        </div>
+        <h2>Danh sách vé đã đặt</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Họ tên</th>
+                    <th>Tên rạp</th>
+                    <th>Tên phim</th>
+                    <th>Ghế</th>
+                    <th>Số lượng</th>
+                    <th>Giá vé</th>
+                    <th>Ngày đặt vé</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody id="ticket-list">
+                <!-- Vé sẽ được thêm tự động ở đây -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        //if (document.referrer.indexOf("login.html") === -1) {
+        //    alert("Bạn không có quyền truy cập vui lòng đăng nhập! .");
+        //    window.location.href = "login.html";
+        //}
+        // Kiểm tra trạng thái đăng nhập
+        //if (localStorage.getItem("adminLoggedIn") !== "true") {
+        //    alert("Bạn không có quyền truy cập vào trang này.");
+          //  window.location.href = "login.html";
+        //}
+        //if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+         //   console.log("Trang đã được tải lại nhưng vẫn giữ trạng thái đăng nhập.");
+          //  } else {
+            // Lưu trạng thái đăng nhập để không bị đăng xuất
+          //  localStorage.setItem("adminLoggedIn", "true");
+            // Kiểm tra nếu trang bị tải lại thì vẫn giữ trạng thái đăng nhập
+            
+        //}
+        function loadMovies() {
+            $.get("http://localhost:3001/Phim", function(data) {
+                var movieList = $('#movie-list');
+                movieList.empty();
+                for (var i = 0; i < data.length; i++) {
+                    movieList.append(
+                        `<tr>
+                            <td>${data[i].rapphim}</td>
+                            <td>${data[i].loaiphim}</td>
+                            <td>${data[i].tenphim}</td>
+                            <td>${data[i].giochieu}</td>
+                            <td>${data[i].gioketthuc}</td>
+                            <td>${data[i].soluongghengoi}</td>
+                            <td>${data[i].soluongghecontrong}</td>
+                            <td>${data[i].giave}</td>
+                            <td>${data[i].maphim}</td>
+                            <td><img src="${data[i].poster}" alt="${data[i].tenphim}" style="max-width: 50px;"></td>
+                            <td>
+                                <button class="action-btn edit-btn" onclick="editMovie('${data[i].id}')">Sửa</button>
+                                <button class="action-btn delete-btn" onclick="deleteMovie('${data[i].id}')">Xóa</button>
+                            </td>
+                        </tr>`
+                    );
+                }
+            });
+        }
+        function loadTickets() {
+            $.get("http://localhost:3001/datve", function(data) {
+                const ticketList = $('#ticket-list');
+                ticketList.empty();
+                data.forEach(function(ve) {
+                    const tongtien = ve.soluongve * 50000;
+                    ticketList.append(`
+                        <tr data-id="${ve.id}">
+                            <td>${ve.tenkhachhang}</td>
+                            <td>${ve.tenrap || 'N/A'}</td>
+                            <td>${ve.tenphim || 'N/A'}</td>
+                            <td>${ve.gheduocchon}</td>
+                            <td>${ve.soluongve}</td>
+                            <td>${ve.giave}</td>
+                            <td>${ve.ngaydatve || 'N/A'}</td>
+                            <td>${tongtien.toLocaleString()} VND</td>
+                            <td class="trangthai">${ve.trangthai || 'Chưa xác định'}</td>
+                            <td>
+                                <button class="action-btn edit-btn btn-sua">cập nhật trạng thái</button>
+                                <button class="action-btn delete-btn btn-xoa">🗑</button>
+                            </td>
+                        </tr>
+                    `);
+                });
+            }).fail(function() {
+                alert("Không thể tải danh sách vé đã đặt. Vui lòng kiểm tra kết nối.");
+            });
+        }
+        
+        $(document).ready(function() {
+            loadMovies(); {
+            $.get("http://localhost:3001/rapphim", function(data) {
+                var select = $("#rapphim");
+                select.empty(); // Xóa các option cũ nếu có
+                data.forEach(function(rap) {
+                    select.append(`<option value="${rap.value}">${rap.ten}</option>`);
+                });
+            }).fail(function() {
+                alert('Không thể tải dữ liệu rạp phim. Vui lòng kiểm tra kết nối hoặc server.');
+            });
+            $.get("http://localhost:3001/loaiphim", function(data) {
+                var select = $("#loaiphim");
+                select.empty(); // Xóa các option cũ nếu có
+                data.forEach(function(loai) {
+                    select.append(`<option value="${loai.name}">${loai.name}</option>`);
+                });
+            }).fail(function() {
+                alert('Không thể tải dữ liệu loại phim. Vui lòng kiểm tra kết nối hoặc server.');
+            });
+        }
+        loadTickets(); // Tải danh sách vé đã đặt khi trang được tải
+                });
+        function validateInput() {
+            var rapphim = $('#rapphim').val().trim();
+            var loaiphim = $('#loaiphim').val().trim();
+            var tenphim = $('#tenphim').val().trim();
+            var giochieu = $('#giochieu').val().trim();
+            var gioketthuc = $('#gioketthuc').val().trim();
+            var soluongghengoi = $('#soluongghengoi').val().trim();
+            var soluongghecontrong = $('#soluongghecontrong').val().trim();
+            var giave = $('#giave').val().trim();
+            var maphim = $('#maphim').val().trim();
+            var poster = $('#poster').val().trim();
+
+            if (rapphim === '' || loaiphim === '' || tenphim === '' || giochieu === '' || gioketthuc === '' || soluongghengoi === '' || soluongghecontrong === '' || giave === '' || maphim === '' || poster === '') {
+                alert('Vui lòng điền đầy đủ thông tin.');
+                return false;
+            }
+            if (isNaN(soluongghengoi) || isNaN(soluongghecontrong) || isNaN(giave) || isNaN(maphim)) {
+                alert('Vui lòng nhập số cho các trường số.');
+                return false;
+            }
+            if (parseInt(soluongghengoi) <= 0 || parseInt(soluongghecontrong) <= 0 || parseInt(giave) <= 0 || parseInt(maphim) <= 0) {
+                alert('Vui lòng nhập số lớn hơn 0 cho các trường số.');
+                return false;
+            }
+            if (new Date(giochieu) >= new Date(gioketthuc)) {
+                alert('Giờ chiếu phải nhỏ hơn giờ kết thúc.');
+                return false;
+            }
+            if (!isValidURL(poster)) {
+                alert('Vui lòng nhập đúng định dạng URL cho poster.');
+                return false;
+            }
+
+            function isValidURL(string) {
+                try {
+                    new URL(string);
+                    return true;
+                } catch (_) {
+                    return false;
+                }
+            }
+
+
+            return true;
+        }
+        //Thêm phim
+        function addMovie() {
+            if (!validateInput()) {
+                return;
+            }
+
+            var formData = {
+                rapphim: $('#rapphim').val().trim(),
+                loaiphim: $('#loaiphim').val().trim(),
+                tenphim: $('#tenphim').val().trim(),
+                giochieu: $('#giochieu').val().trim(),
+                gioketthuc: $('#gioketthuc').val().trim(),
+                soluongghengoi: $('#soluongghengoi').val().trim(),
+                soluongghecontrong: $('#soluongghecontrong').val().trim(),
+                giave: $('#giave').val().trim(),
+                maphim: $('#maphim').val().trim(),
+                poster: $('#poster').val().trim()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:3001/Phim",
+                contentType: "application/json",
+                data: JSON.stringify(formData),
+                success: function() {
+                    loadMovies();
+                    alert('Thêm phim thành công!');
+                },
+                error: function() {
+                    alert('Đã xảy ra lỗi khi thêm phim.');
+                }
+            });
+
+            // Reset form after adding
+            $('#Vephim')[0].reset();
+        }
+        // Sửa thông tin phim
+        function editMovie(id) {
+            $.get(`http://localhost:3001/Phim/${id}`, function(data) {
+                $('#rapphim').val(data.rapphim);
+                $('#loaiphim').val(data.loaiphim);
+                $('#tenphim').val(data.tenphim);
+                $('#giochieu').val(data.giochieu);
+                $('#gioketthuc').val(data.gioketthuc);
+                $('#soluongghengoi').val(data.soluongghengoi);
+                $('#soluongghecontrong').val(data.soluongghecontrong);
+                $('#giave').val(data.giave);
+                $('#maphim').val(data.maphim);
+                $('#poster').val(data.poster);
+
+                // Change button function to update
+                $('#add-movie-btn').text('Cập nhật phim').off('click').on('click', function() {
+                    updateMovie(id);
+                });
+            });
+        }
+
+        function updateMovie(id) {
+            if (!validateInput()) {
+                return;
+            }
+
+            var formData = {
+                rapphim: $('#rapphim').val().trim(),
+                loaiphim: $('#loaiphim').val().trim(),
+                tenphim: $('#tenphim').val().trim(),
+                giochieu: $('#giochieu').val().trim(),
+                gioketthuc: $('#gioketthuc').val().trim(),
+                soluongghengoi: $('#soluongghengoi').val().trim(),
+                soluongghecontrong: $('#soluongghecontrong').val().trim(),
+                giave: $('#giave').val().trim(),
+                maphim: $('#maphim').val().trim(),
+                poster: $('#poster').val().trim()
+            };
+
+            $.ajax({
+                type: "PUT",
+                url: `http://localhost:3001/Phim/${id}`,
+                contentType: "application/json",
+                data: JSON.stringify(formData),
+                success: function() {
+                    loadMovies();
+                    alert('Cập nhật phim thành công!');
+                },
+                error: function() {
+                    alert('Đã xảy ra lỗi khi cập nhật phim.');
+                }
+            });
+
+            // Reset form after updating
+            $('#Vephim')[0].reset();
+
+            // Change button function back to add after updating
+            $('#add-movie-btn').text('Thêm phim').off('click').on('click', addMovie);
+        }
+        // xóa phim
+        function deleteMovie(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa phim này không?')) {
+                $.ajax({
+                    type: "DELETE",
+                    url: `http://localhost:3001/Phim/${id}`,
+                    success: function() {
+                        loadMovies();
+                        alert('Xóa phim thành công!');
+                    },
+                    error: function() {
+                        alert('Đã xảy ra lỗi khi xóa phim.');
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function() {
+            loadMovies();
+            loadTickets();
+        
+            $('#add-movie-btn').on('click', addMovie);
+        
+            // Sửa trạng thái vé
+            $(document).on('click', '.btn-sua', function () {
+                const row = $(this).closest('tr');
+                const id = row.data('id');
+                const cell = row.find('.trangthai') ;
+                const current = cell.text().trim();
+                const updated = current === '✅ Đã thanh toán' ? 'Chưa thanh toán' : '✅ Đã thanh toán';
+        
+                $.ajax({
+                    url: `http://localhost:3001/datve/${id}`,
+                    type: 'PATCH',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ trangthai: updated }),
+                    success: function () {
+                        cell.text(updated);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Lỗi:', xhr.responseText);
+                        alert("Cập nhật trạng thái thất bại.");
+                    }
+                });
+            });
+        
+            // Xoá vé
+            $(document).on('click', '.btn-xoa', function () {
+                
+                if (!confirm("Bạn có chắc chắn muốn xoá vé này không?")) return;
+                const row = $(this).closest('tr');
+                const id = row.data('id');
+                console.log('ID vé cần xóa:', id);
+        
+                $.ajax({
+                    url: `http://localhost:3001/datve/${id}`,
+                    type: 'DELETE',
+                    success: function () {
+                        row.remove();
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Lỗi:', xhr.responseText);
+                        alert("Xoá vé thất bại.");
+                    }
+                });
+            });
+        });
+        
+    </script>
+</body>
+</html>

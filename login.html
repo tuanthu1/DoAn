@@ -1,0 +1,89 @@
+<!DOCTYPE html >
+<html >
+    <head>
+        <title>Tạo login box đơn giản</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="stylesheet" href="dialog.css" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    </head>
+    <body>
+        <script>
+            
+        </script>
+        <div id="login-box" class="login">
+            <p class="login_title">Bạn là admin? Hãy đăng nhập.</p>
+            <a href="#" class="close"><img src="/img/close.png" class="img-close" title="Close Window" alt="Close" /></a>
+            <form method="post" class="login-content" action="#">
+            <label class="username">
+            <span>Tên hoặc email</span>
+            <input id="username" name="username" value="" type="text" autocomplete="on" placeholder="Username">
+            </label>
+            <label class="password">
+            <span>Mật khẩu</span>
+            <input id="password" name="password" value="" type="password" placeholder="Password">
+            </label>
+            <button class="button submit-button" type="button">Đăng nhập</button>
+            <p>
+            <a class="forgot" href="https://fb.com/tuanthu2911/">Quên mật khẩu?</a>
+            </p>        
+            </form>
+        </div>
+        <script>
+            $(document).ready(function() {
+                $(document).ready(function() {
+                    // Tự động hiển thị hộp đăng nhập khi trang được tải
+                    var loginBox = "#login-box";
+                    $(loginBox).fadeIn("slow");
+    
+                    // Thêm phần tử id="over" vào cuối thẻ body
+                    $('body').append('<div id="over"></div>');
+                    $('#over').fadeIn(1000);
+                });
+            // Kiểm tra thông tin đăng nhập
+            $('.submit-button').on('click', function() {
+                var username = $('#username').val();
+                var password = $('#password').val();
+
+                $.ajax({
+                    url: 'http://localhost:3001/admin',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                      var isValid = false;
+                      $.each(data, function(index, admin) {
+                        if (admin.username === username && admin.password === password) {
+                          isValid = true;
+                          return false; // dừng lặp
+                        }
+                      });
+                  
+                      if (isValid) {
+                        // Ghi trạng thái vào localStorage (nếu cần)
+                        localStorage.setItem("adminLoggedIn", "true");
+                        window.location.href = 'quanly.html';
+                      } else {
+                        alert('Thông tin đăng nhập không chính xác!');
+                      }
+                    },
+                    error: function() {
+                      alert('Không thể kết nối tới máy chủ!');
+                    }
+                  });                  
+            });
+                // khi click đóng hộp thoại
+                $(document).on('click', "a.close, #over", function() { 
+                    if ($('#username').val() === '' || $('#password').val() === '') {
+                        alert('Bạn không phải là admin!, vui lòng nhập thông tin đăng nhập!');
+                        return false;
+                    }
+                    $('#over, .login').fadeOut(300 , function() {
+                        $('#over').remove();  
+                    }); 
+                    return false;
+                });
+                
+            });
+        </script>
+    </body>
+</html>
