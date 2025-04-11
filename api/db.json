@@ -1,0 +1,56 @@
+"rapphim": [
+    {
+      "id": 1,
+      "ten": "Beta Thanh Xuân",
+      "dia_chi": "Tầng hầm B1, tòa nhà Golden West, Số 2, Lê Văn Thiêm, Thanh Xuân, Hà Nội",
+      "value": "beta-thanh-xuan"
+    },
+    {
+      "id": 2,
+      "ten": "Beta Mỹ Đình",
+      "dia_chi": "Tầng hầm B1, tòa nhà Golden Palace, Đường Mễ Trì, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội",
+      "value": "beta-my-dinh"
+    },
+    {
+      "id": 3,
+      "ten": "CGV Vincom Bà Triệu",
+      "dia_chi": "Tầng 6, Vincom Center Bà Triệu, 191 Bà Triệu, Hai Bà Trưng, Hà Nội",
+      "value": "cgv-vincom-ba-trieu"
+    },
+    {
+      "id": 4,
+      "ten": "CGV Indochina Plaza Hà Nội",
+      "dia_chi": "Tầng 4, Indochina Plaza Hà Nội, 241 Xuân Thủy, Cầu Giấy, Hà Nội",
+      "value": "cgv-indochina-plaza"
+    },
+    {
+      "id": 5,
+      "ten": "Lotte Cinema Landmark",
+      "dia_chi": "Tầng 5, Keangnam Hanoi Landmark Tower, E6 Phạm Hùng, Cầu Giấy, Hà Nội",
+      "value": "lotte-landmark"
+    },
+    {
+      "id": 6,
+      "ten": "Lotte Cinema Thăng Long",
+      "dia_chi": "Tầng 3, Big C Thăng Long, 222 Trần Duy Hưng, Cầu Giấy, Hà Nội",
+      "value": "lotte-thang-long"
+    },
+    {
+      "id": 7,
+      "ten": "BHD Star Vincom Phạm Ngọc Thạch",
+      "dia_chi": "Tầng 8, Vincom Phạm Ngọc Thạch, 2 Phạm Ngọc Thạch, Đống Đa, Hà Nội",
+      "value": "bhd-vincom-pham-ngoc-thach"
+    },
+    {
+      "id": 8,
+      "ten": "Galaxy Mipec Long Biên",
+      "dia_chi": "Tầng 6, Tòa nhà Mipec Riverside, Số 2, phố Long Biên 2, Long Biên, Hà Nội",
+      "value": "galaxy-mipec-long-bien"
+    },
+    {
+      "id": 9,
+      "ten": "Trung tâm Chiếu phim Quốc gia",
+      "dia_chi": "87 Láng Hạ, Ba Đình, Hà Nội",
+      "value": "trung-tam-chieu-phim-quoc-gia"
+    }
+  ],
