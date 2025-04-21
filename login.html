@@ -1,10 +1,10 @@
 <!DOCTYPE html >
 <html >
     <head>
-        <title>Tạo login box đơn giản</title>
+        <title>Login ADMIN</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
-        <link rel="stylesheet" href="dialog.css" />
+        <link rel="stylesheet" href="/css/dialog.css" />
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     </head>
     <body>
@@ -46,7 +46,7 @@
                 var password = $('#password').val();
 
                 $.ajax({
-                    url: 'http://localhost:3001/admin',
+                    url: 'https://67f8cc292466325443edda28.mockapi.io/admin',
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {

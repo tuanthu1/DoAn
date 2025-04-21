@@ -4,11 +4,14 @@
   <meta charset="UTF-8" />
   <link class="img" rel="icon" href="/img/gcv.jpg" type="image/x-icon">
   <title>Thanh Toán Vé Xem Phim</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #f9f9f9;
-      padding: 30px;
+      padding: 0;
     }
     .container {
       background: white;
@@ -17,6 +20,8 @@
       padding: 25px;
       border-radius: 8px;
       box-shadow: 0 0 10px #ccc;
+      margin-bottom: 50px;
+      margin-top: 20px;
     }
     h2, h3 {
       text-align: center;
@@ -61,6 +66,97 @@
     .btn:hover {
       background-color: #0056b3;
     }
+    .footer {
+      background-color: #bfdfff;
+      padding: 20px 0;
+      width: 100%;
+  }
+  
+  .footer-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      flex-wrap: wrap;
+  }
+  
+  .footer-logo img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+  }
+  
+  .footer-info {
+      flex: 1;
+      margin-left: 20px;
+  }
+  
+  .footer-info h3 {
+      font-size: 16px;
+      color: #dddddd;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+  }
+  
+  .footer-info p {
+      font-size: 14px;
+      color: #ffffff;
+      line-height: 1.5;
+  }
+  
+  .footer-info p a{
+      color: #ffffff !important;
+  }
+  
+  .footer-partners {
+      margin-left: 20px;
+  }
+  
+  .footer-partners h3 {
+      font-size: 16px;
+      color: #ffffff;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+  }
+  
+  .partner-logos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+  }
+  
+  .partner-logos img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+  }
+  
+  .footer-certification img {
+      margin-left: 60px;
+      width: 100px;
+      height: 40px;
+  }
+  @media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: flex-start;
+        max-width: 720px;
+    }
+
+    .footer-logo, .footer-info, .footer-partners, .footer-certification {
+        margin: 10px 0;
+    }
+
+    .footer-info {
+        margin-left: 0;
+    }
+
+    .partner-logos {
+        justify-content: flex-start;
+    }
+}
   </style>
 </head>
 <body>
@@ -70,23 +166,24 @@
 
     <div class="info">
         <p><span>Họ tên:</span> <span id="tenkhachhang"></span></p>
+        <p><span>SĐT:</span> <span id="sodt"></span></p>
+      <p><span>Email:</span> <span id="email"></span></p>
       <p><span>Tên phim:</span> <span id="tenphim"></span></p>
       <p><span>Ghế đã chọn:</span> <span id="ghe"></span></p>
       <p><span>Số lượng vé:</span> <span id="soluong"></span></p>
-      <p><span>Giá vé:</span> <span id="giave">VNĐ</span></p>
-      <p><span>Tổng tiền:</span> <span id="tongtien"></span> VNĐ</p>
+      <p><span>Giá vé:</span> <span id="giave"></span></p>
+      <p><span>Tổng tiền:</span> <span id="tongtien"></span> </p>
         <p><span>Tên rạp:</span> <span id="tenrap"></span></p>
     
     </div>
 
-    <div class="payment-info">
+    <div class="payment-info" id="payment">
       <h3>Thông Tin Chuyển Khoản</h3>
       <p><strong>Chủ tài khoản:</strong> Hoàng Tuấn Thư</p>
       <p><strong>Số tài khoản:</strong> 123456789001</p>
 
       <label for="bank">Ngân hàng:</label>
-      <select id="bank" class="form-control" required>
-        <option value="">-- Chọn ngân hàng --</option>
+      <select id="bank" class="form-control" required onchange="validateBankSelection()">
         <option>Vietcombank</option>
         <option>ACB</option>
         <option>MB Bank</option>
@@ -95,15 +192,56 @@
         <option>VIB</option>
         <option>Techcombank</option>
       </select>
-
       <p class="mt-3"><strong>Nội dung chuyển khoản:</strong> <span id="noidung"></span></p>
     </div>
 
-    <button class="btn" onclick="xacNhan()">Xác Nhận Thanh Toán</button>
-    <button class="btn" onclick="window.location.href='trangchuchinh.html'">Về Trang Chủ</button>
+    <button class="btn" id="showPaymentInfo" onclick="showPaymentInfo()">Hiển Thị Thông Tin Thanh Toán</button>
+    <button class="btn" id="confirmPayment" onclick="xacNhan()" style="display: none;">Xác Nhận Thanh Toán</button>
+    <button class="btn" onclick="window.location.href='index.html'">Quay lại trang chủ</button>
   </div>
-  
-  <script>
+    <!-- phần footer -->
+    <footer class="bg-dark text-white text-center py-3" style="background-color: #00879c !important;">
+      <div class="footer-container">
+          <!-- Logo -->
+          <div class="footer-logo">
+              <a href="#"><img style="display: block; width: 100px; height:100px;" src="/img/gcv.jpg" alt="MV Logo"></a>
+          </div>
+
+          <!-- Company Info -->
+          <div class="footer-info">
+              <h3>CÔNG TY TNHH MONET</h3>
+              <p><strong>Số ĐKKD:</strong> 0314675756 - Nơi cấp: Sở kế hoạch và đầu tư Tp. Hồ Chí Minh - Đăng ký lần đầu ngày 01/11/2018</p>
+              <p><strong>Địa chỉ:</strong> Hà Nội</p>
+              <p><strong>Về chúng tôi:</strong> <a href="#">Chính sách bảo mật</a> - <a href="#">Hỗ trợ</a> - <a href="#">Liên hệ</a></p>
+          </div>
+
+          <!-- Partners -->
+          <div class="footer-partners">
+              <h3>ĐỐI TÁC</h3>
+              <div class="partner-logos">
+                  <a href="https://betacinemas.vn/" ><img src="/img/logobetacnm.png" alt="Beta Cinemas"></a>
+                  <a href="https://www.megagscinemas.vn/"><img src="/img/mega.jpg" alt="Mega GS"></a>
+                  <a href="https://cinestar.com.vn/"><img src="/img/cinesta.png" alt="Cinestar"></a>
+                  <a href="https://dcine.vn/"><img src="/img/dcine.png" alt="DCine"></a>
+                  <a href="https://cinemaxvn.com/"><img src="/img/cinemax.png" alt="Cinema"></a>
+                  <a href="https://starlight.vn/"><img src="/img/starlight.jpg" alt="Starlight"></a>
+                  <a href="https://riocinema.vn/"><img src="/img/rio.png" alt="Rio Cinemas"></a>
+                  <a href="https://ddcinema.vn/"><img src="/img/dd.jpg" alt="DDC"></a>
+                  <a href="https://touchcinema.com/"><img src="/img/touch.jpg" alt="Touch Cinema"></a>
+                  <a href="https://momo.vn/"><img src="/img/momo.png" alt="MoMo"></a>
+                  <a href="https://zalopay.vn/"><img src="/img/zlpay.jpg" alt="ZaloPay"></a>
+              </div>
+          </div>
+    <script>
+      document.getElementById("payment").style.display = "none";
+      document.getElementById("showPaymentInfo").style.display = "block";
+      document.getElementById("confirmPayment").style.display = "none";
+      
+      function showPaymentInfo() {
+      document.getElementById("payment").style.display = "block";
+      document.getElementById("showPaymentInfo").style.display = "none";
+      document.getElementById("confirmPayment").style.display = "block";
+      }
     
     const params = new URLSearchParams(window.location.search);
     const hoten = params.get("tenkhachhang") || "Người đặt";
@@ -111,23 +249,44 @@
     const ghe = params.get("ghe") || "";
     const giave = params.get("giave") || "";
     const rap = params.get("tenrap") || "Không rõ";
+    const sodt = params.get("sodt") || "Không rõ";
+    const email = params.get("email") || "Không rõ";
 
     const gheArr = ghe.split(",").filter(x => x.trim() !== "");
-    const tongTien = gheArr.length * giave;
+    const giaveNumber = parseInt(giave.replace(/\./g, "")) || 0;
+    const tongTien = gheArr.length * giaveNumber;
     document.getElementById("tenkhachhang").innerText = hoten || "Không rõ";
     document.getElementById("tenphim").innerText = tenphim;
     document.getElementById("tenrap").innerText = rap;
     document.getElementById("ghe").innerText = gheArr.join(", ");
     document.getElementById("soluong").innerText = gheArr.length;
-    document.getElementById("giave").innerText = giave.toLocaleString() + ".000VNĐ";
-    document.getElementById("tongtien").innerText = tongTien.toLocaleString() + ".000"; 
+    document.getElementById("giave").innerText = giave.toLocaleString()+ ".000VND";
+    document.getElementById("tongtien").innerText = tongTien.toLocaleString() + ".000VND"; 
     document.getElementById("noidung").innerText = hoten;
-
+    document.getElementById("sodt").innerText = sodt;
+    document.getElementById("email").innerText = email;
+    let isConfirmed = false;
+    //chọn ngân hàng
+    function validateBankSelection() {
+      const bankSelect = document.getElementById("bank");
+      if (bankSelect.value === "") {
+    alert("Vui lòng chọn ngân hàng trước khi tiếp tục.");
+      }
+    }
+    //xác nhận thanh toán
     function xacNhan() {
+      
+
+      if (!isConfirmed) {
+        alert("Vui lòng kiểm tra thông tin thanh toán trước khi xác nhận.");
+        isConfirmed = true;
+        document.getElementById("payment").scrollIntoView({ behavior: "smooth" });
+        return;
+      }
         const params = new URLSearchParams(window.location.search);
         const marap = params.get("tenrap"); // ví dụ: beta-my-dinh
-
-        fetch("http://localhost:3001/rapphim") // path tới JSON
+        
+        fetch("https://67f8cb2d2466325443edd5a7.mockapi.io/rapphim") // path tới JSON
         .then(res => res.json())
         .then(data => {
             const matched = data.find(r => r.value === marap);
@@ -141,8 +300,11 @@
             console.error("Không tải được danh sách rạp:", err);
         });
 
+        
         const ve = {
           tenkhachhang: hoten,
+          sodt: sodt,
+          email: email,
           tenphim: tenphim,
           gheduocchon: gheArr.join(","),
           soluongve: gheArr.length,
@@ -152,14 +314,15 @@
           tongtien: tongTien + ".000",
           trangthai: "✅Đã thanh toán",
         };
-        fetch('http://localhost:3001/datve', {
+        fetch('https://67f8cc292466325443edda28.mockapi.io/datve', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(ve)
           })
 
-            alert("Thanh toán thành công! Cảm ơn bạn đã đặt vé.");
-            window.location.href = "trangchuchinh.html";
+            alert("Thanh toán thành công! Cảm ơn bạn đã đặt vé, chúng tôi sẽ liên hệ với bạn qua số điện thoại.");
+            window.location.href = "index.html";
+            document.getElementById("btnXacNhan").disabled = true;
 }
       
   </script>

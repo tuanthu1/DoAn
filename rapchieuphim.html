@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link class="img" rel="icon" href="/img/gcv.jpg" type="image/x-icon">
+    <title>Thông tin rạp chiếu</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            color: #008aa9;
+            background-color: #008aa9;
+            padding: 20px 0;
+        }
+
+        header .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #c50000;
+        }
+
+        header .navbar-nav .nav-link {
+            color: #fff;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+        }
+
+        header .navbar-nav .nav-link:hover {
+            color: #ffc107;
+        }
+        .footer {
+          background-color: #bfdfff;
+          padding: 20px 0;
+          width: 100%;
+      }
+      
+      .footer-container {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+          flex-wrap: wrap;
+      }
+      
+      .footer-logo img {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+      }
+      
+      .footer-info {
+          flex: 1;
+          margin-left: 20px;
+      }
+      
+      .footer-info h3 {
+          font-size: 16px;
+          color: #dddddd;
+          margin-bottom: 10px;
+          text-transform: uppercase;
+      }
+      
+      .footer-info p {
+          font-size: 14px;
+          color: #ffffff;
+          line-height: 1.5;
+      }
+      
+      .footer-info p a {
+          color: #ffffff;
+      }
+      
+      .footer-partners {
+          margin-left: 20px;
+      }
+      
+      .footer-partners h3 {
+          font-size: 16px;
+          color: #ffffff;
+          margin-bottom: 10px;
+          text-transform: uppercase;
+      }
+      
+      .partner-logos {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+      }
+      
+      .partner-logos img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+      }
+      
+      .footer-certification img {
+          margin-left: 60px;
+          width: 100px;
+          height: 40px;
+      }
+      @media (max-width: 768px) {
+        .footer-container {
+            flex-direction: column;
+            align-items: flex-start;
+            max-width: 720px;
+        }
+    
+        .footer-logo, .footer-info, .footer-partners, .footer-certification {
+            margin: 10px 0;
+        }
+    
+        .footer-info {
+            margin-left: 0;
+        }
+    
+        .partner-logos {
+            justify-content: flex-start;
+        }
+    }
+    </style>
+</head>
+<body>
+    <header class="bg-dark text-white">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <a class="navbar-brand" href="#">Phim Online</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div style="text-align: center; margin: 20px 0;">
+                    <input type="text" id="search-input" placeholder="🔍 Tìm tên rạp..." style="padding: 10px; width: 300px; border: 1px solid #ccc; border-radius: 5px;">
+                  </div>                   
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Trang Chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#movie-list">Phim Đang Chiếu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="rapchieuphim.html">Rạp Chiều Phim</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://fb.com/tuanthu2911/">Liên Hệ</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+      <div class="card mt-4">
+        <div class="card-body">
+          <h5 class="card-title">Thông tin rạp chiếu</h5>
+          <p><strong>Tên rạp:</strong><!---tên rạp sẽ hiển thị ở đây--> <span id="tenRap"></span></p>
+          <p><strong>Địa chỉ:</strong> <!---địa chỉ rạp sẽ hiển thị ở đây--><span id="diaChiRap"></span></p>
+        </div>
+      </div>
+      <!-- phần footer -->
+      <footer class="bg-dark text-white text-center py-3" style="background-color: #00879c !important;">
+        <div class="footer-container">
+            <!-- Logo -->
+            <div class="footer-logo">
+                <a href="#"><img style="display: block; width: 100px; height:100px;" src="/img/gcv.jpg" alt="MV Logo"></a>
+            </div>
+
+            <!-- Company Info -->
+            <div class="footer-info">
+                <h3>CÔNG TY TNHH MONET</h3>
+                <p><strong>Số ĐKKD:</strong> 0314675756 - Nơi cấp: Sở kế hoạch và đầu tư Tp. Hồ Chí Minh - Đăng ký lần đầu ngày 01/11/2018</p>
+                <p><strong>Địa chỉ:</strong> Hà Nội</p>
+                <p><strong>Về chúng tôi:</strong> <a href="#">Chính sách bảo mật</a> - <a href="#">Hỗ trợ</a> - <a href="#">Liên hệ</a></p>
+            </div>
+
+            <!-- Partners -->
+            <div class="footer-partners">
+                <h3>ĐỐI TÁC</h3>
+                <div class="partner-logos">
+                    <a href="https://betacinemas.vn/" ><img src="/img/logobetacnm.png" alt="Beta Cinemas"></a>
+                    <a href="https://www.megagscinemas.vn/"><img src="/img/mega.jpg" alt="Mega GS"></a>
+                    <a href="https://cinestar.com.vn/"><img src="/img/cinesta.png" alt="Cinestar"></a>
+                    <a href="https://dcine.vn/"><img src="/img/dcine.png" alt="DCine"></a>
+                    <a href="https://cinemaxvn.com/"><img src="/img/cinemax.png" alt="Cinema"></a>
+                    <a href="https://starlight.vn/"><img src="/img/starlight.jpg" alt="Starlight"></a>
+                    <a href="https://riocinema.vn/"><img src="/img/rio.png" alt="Rio Cinemas"></a>
+                    <a href="https://ddcinema.vn/"><img src="/img/dd.jpg" alt="DDC"></a>
+                    <a href="https://touchcinema.com/"><img src="/img/touch.jpg" alt="Touch Cinema"></a>
+                    <a href="https://momo.vn/"><img src="/img/momo.png" alt="MoMo"></a>
+                    <a href="https://zalopay.vn/"><img src="/img/zlpay.jpg" alt="ZaloPay"></a>
+                </div>
+            </div>
+<script>
+  fetch("https://67f8cb2d2466325443edd5a7.mockapi.io/rapphim")
+    .then(res => res.json())
+    .then(data => {
+      const container = document.querySelector(".card-body");
+      container.innerHTML = "<h5 class='card-title'>Danh sách rạp chiếu</h5>";
+
+      data.forEach((rap, index) => {
+        container.innerHTML += `
+          <hr>
+            <p><strong>Số rạp: ${index + 1}</strong></p>
+          <p><strong>Rạp :</strong> ${rap.ten}</p>
+          <p><strong>Địa chỉ:</strong> ${rap.dia_chi}</p>
+        `;
+      });
+    })
+    .catch(error => {
+      console.error("Lỗi khi tải dữ liệu rạp:", error);
+    });
+</script>
+
+      
+</body>
+</html>

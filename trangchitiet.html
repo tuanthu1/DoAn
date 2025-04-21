@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link class="img" rel="icon" href="/img/gcv.jpg" type="image/x-icon">
     <title>Chi Tiết Phim</title>
-    <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <style>
         body {
@@ -15,7 +14,7 @@
             margin: 0;
             padding: 0;
         }
-
+        
         .container {
             width: 80%;
             margin: auto;
@@ -23,6 +22,8 @@
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
+            margin-bottom: 50px;
+            border-radius: 10px;
         }
 
         h2 {
@@ -55,6 +56,7 @@
 
         input[type="text"],
         input[type="number"],
+        input[type="email"],
         select {
             width: calc(100% - 20px);
             padding: 10px;
@@ -133,8 +135,12 @@
             text-align: center;
             line-height: 50px;
             font-weight: bold;
+            
         }
-        
+        .seat-wrapper {
+            overflow-x: auto;
+            width: 100%;
+        }
         .seat.selected {
             background-color: #4caf50;
             color: white;
@@ -144,7 +150,98 @@
             background-color: #4d4d4d !important;
             color: white;
             cursor: not-allowed;
-          }                
+          } 
+          .footer {
+            background-color: #bfdfff;
+            padding: 20px 0;
+            width: 100%;
+        }
+        
+        .footer-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        
+        .footer-info {
+            flex: 1;
+            margin-left: 20px;
+        }
+        
+        .footer-info h3 {
+            font-size: 16px;
+            color: #dddddd;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .footer-info p {
+            font-size: 14px;
+            color: #ffffff;
+            line-height: 1.5;
+        }
+        
+        .footer-info p a {
+            color: #ffffff;
+        }
+        
+        .footer-partners {
+            margin-left: 20px;
+        }
+        
+        .footer-partners h3 {
+            font-size: 16px;
+            color: #ffffff;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .partner-logos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .partner-logos img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .footer-certification img {
+            margin-left: 60px;
+            width: 100px;
+            height: 40px;
+        }  
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                align-items: flex-start;
+                max-width: 720px;
+            }
+        
+            .footer-logo, .footer-info, .footer-partners, .footer-certification {
+                margin: 10px 0;
+            }
+        
+            .footer-info {
+                margin-left: 0;
+            }
+        
+            .partner-logos {
+                justify-content: flex-start;
+            }
+        }             
     </style>
 </head>
 <body>
@@ -158,7 +255,14 @@
                 <label for="tenkhachhang">Tên khách hàng:</label>
                 <input type="text" id="tenkhachhang" name="tenkhachhang" required>
             </div>
-            
+            <div class="form-group">
+                <label for="sodt">Số điện thoại:</label>
+                <input type="number" id="sodt" name="sodt" min="0" max="10" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
             <div class="form-group">
                 <label for="soluongve">Số lượng vé:</label>
                 <input type="number" id="soluongve" name="soluongve" required>
@@ -173,19 +277,52 @@
             <div class="form-group">
                 <label for="loaichongoi">Chọn chỗ ngồi:</label>
                 <div class="screen">MÀN HÌNH</div>
-                <div class="seats" id="seat-container"></div>
+                <div class="seat-wrapper">
+                <div class="seats" id="seat-container">
+
+                </div>
             </div>
-            <div id="seat-container">
-                <!-- Ghế sẽ được tạo ở đây -->
             </div>
               
             <button type="button" onclick="datVe()">Đặt vé</button>
-            <a id="trangchu" href="trangchuchinh.html">Trang chủ</a>
+            <a id="trangchu" href="index.html">Trang chủ</a>
         </form>
 
         <div id="thongbao"></div>
     </div>
+    <!-- phần footer -->
+    <footer class="bg-dark text-white text-center py-3" style="background-color: #00879c !important;">
+        <div class="footer-container">
+            <!-- Logo -->
+            <div class="footer-logo">
+                <a href="#"><img style="display: block; width: 100px; height:100px;" src="/img/gcv.jpg" alt="MV Logo"></a>
+            </div>
 
+            <!-- Company Info -->
+            <div class="footer-info">
+                <h3>CÔNG TY TNHH MONET</h3>
+                <p><strong>Số ĐKKD:</strong> 0314675756 - Nơi cấp: Sở kế hoạch và đầu tư Tp. Hồ Chí Minh - Đăng ký lần đầu ngày 01/11/2018</p>
+                <p><strong>Địa chỉ:</strong> Hà Nội</p>
+                <p><strong>Về chúng tôi:</strong> <a href="#">Chính sách bảo mật</a> - <a href="#">Hỗ trợ</a> - <a href="#">Liên hệ</a></p>
+            </div>
+
+            <!-- Partners -->
+            <div class="footer-partners">
+                <h3>ĐỐI TÁC</h3>
+                <div class="partner-logos">
+                    <a href="https://betacinemas.vn/" ><img src="/img/logobetacnm.png" alt="Beta Cinemas"></a>
+                    <a href="https://www.megagscinemas.vn/"><img src="/img/mega.jpg" alt="Mega GS"></a>
+                    <a href="https://cinestar.com.vn/"><img src="/img/cinesta.png" alt="Cinestar"></a>
+                    <a href="https://dcine.vn/"><img src="/img/dcine.png" alt="DCine"></a>
+                    <a href="https://cinemaxvn.com/"><img src="/img/cinemax.png" alt="Cinema"></a>
+                    <a href="https://starlight.vn/"><img src="/img/starlight.jpg" alt="Starlight"></a>
+                    <a href="https://riocinema.vn/"><img src="/img/rio.png" alt="Rio Cinemas"></a>
+                    <a href="https://ddcinema.vn/"><img src="/img/dd.jpg" alt="DDC"></a>
+                    <a href="https://touchcinema.com/"><img src="/img/touch.jpg" alt="Touch Cinema"></a>
+                    <a href="https://momo.vn/"><img src="/img/momo.png" alt="MoMo"></a>
+                    <a href="https://zalopay.vn/"><img src="/img/zlpay.jpg" alt="ZaloPay"></a>
+                </div>
+            </div>
     <script>
         $(document).ready(function() {
             // Lấy thông tin từ URL
@@ -198,7 +335,38 @@
             var gioketthuc = urlParams.get('gioketthuc');
             var soluongghengoi = urlParams.get('soluongghengoi');
             var giave = urlParams.get('giave');
+            function validateInput() {
+                var tenkhachhang = $('#tenkhachhang').val(); // Lấy giá trị từ input tên khách hàng
+                var sodt = $('#sodt').val(); // Lấy giá trị từ input số điện thoại
+                var email = $('#email').val(); // Lấy giá trị từ input email
+                // Nếu tên khách hàng không nhập hoặc không hợp lệ, hiển thị thông báo lỗi
+                if (tenkhachhang.trim() === '') {
+                    $('#thongbao').html('<p class="error-msg">Tên của bạn không được để trống.</p>');
+                    return false;
+                }
+                // Nếu số dt không hợp lệ, hiển thị thông báo lỗi
+                if (isNaN(sodt) || sodt.length < 10 || sodt.length > 10) {
+                    $('#thongbao').html('<p class="error-msg">Số điện thoại phải có 10 số.</p>');
+                    return false;
+                }
+                // Nếu số dt không bắt đầu bằng "0", hiển thị thông báo lỗi
+                if (sodt.charAt(0) !== "0" && sodt.charAt(1) != "3") {
+                    $('#thongbao').html('<p class="error-msg">Số điện thoại không hợp lệ.</p>');
+                    return false;
+                }
+                // Nếu email không hợp lệ, hiển thị thông báo lỗi
+                if (!email.includes('@') || !email.includes('.')) {
+                    $('#thongbao').html('<p class="error-msg">Email không hợp lệ.</p>');
+                    return false;
+                }
+                // Nếu không chọn ghế, hiển thị thông báo lỗi
+                if (selectedSeats.length === 0) {
+                    $('#thongbao').html('<p class="error-msg">Vui lòng chọn ghế ngồi.</p>');
+                    return false;
+                }
 
+                return true; // Trả về true nếu tất cả hợp lệ
+            }
             // Hiển thị thông tin phim
             $('#movie-info').html(`
                 <img src="${decodeURIComponent(poster)}" alt="Poster Phim">
@@ -206,7 +374,7 @@
                 <p>Giờ chiếu: ${giochieu}</p>
                 <p>Giờ kết thúc: ${gioketthuc}</p>
                 <p>Số lượng ghế ngồi: ${soluongghengoi}</p>
-                <p>Giá vé: ${giave}</p>
+                <p>Giá vé: ${giave}.000VNĐ</p>
             `);
 
             // Điền thông tin phim vào các thẻ input
@@ -247,40 +415,8 @@
                 }
             }
             generateSeats();
-            // Đánh dấu ghế đã đặt (ví dụ: A1, B2...)
-                $.get("http://localhost:3001/datve", function(data) {
-                    var selectedRap = $("#rapphim option:selected").text().trim();
-                    var bookedSeats = data
-                        .filter(ve => ve.tenrap === selectedRap)
-                        .flatMap(ve => ve.gheduocchon.split(',').map(s => s.trim()));
-                        disableSeats(gheDaDat);
-                        function disableSeats(gheDaDat) {
-                            $(".seat").each(function () {
-                              const ghe = $(this).text().trim();
-                              if (gheDaDat.includes(ghe)) {
-                                $(this)
-                                  .addClass("occupied")
-                                  .off("click")
-                                  .css("pointer-events", "none");
-                              }
-                            });
-                          }                          
-                    bookedSeats.forEach(function(seatId) {
-                        var seatElement = $(`.seat[data-ghe="${seatId}"]`);
-                        if (seatElement.length === 0) {
-                            seatElement = $(`.seat:contains(${seatId})`); // Tìm ghế theo tên
-                        }
-                        seatElement.removeClass('selected'); // Bỏ chọn ghế đã đặt
-                        seatElement.addClass('occupied');
-                        seatElement.off('click'); // Ngăn không cho click vào ghế đã đặt
-                    });
-                }).fail(function() {
-                    alert('Không thể tải dữ liệu ghế đã đặt. Vui lòng kiểm tra kết nối hoặc server.');
-                });
-                
-                             
             // Đặt vé
-            $.get("http://localhost:3001/rapphim", function(data) {
+            $.get("https://67f8cb2d2466325443edd5a7.mockapi.io/rapphim", function(data) {
                 var select = $("#rapphim");
                 select.empty(); // Xóa các option cũ nếu có
                 data.forEach(function(rap) {
@@ -297,44 +433,45 @@
             });
            
             window.datVe = function() {
-                
+                if(!validateInput()) {
+                    return;
+                }
                 var tenkhachhang = $('#tenkhachhang').val();
+                var sodt = $('#sodt').val();
+                var email = $('#email').val();
                 var soluongve = $('#soluongve').val();
-                // var chon = $('#loaichongoi').val(); // Removed as it is unused
-
-                // Kiểm tra các trường dữ liệu
-                if (tenkhachhang.trim() === '' || soluongve <= 0) {
+            
+                if (tenkhachhang.trim() === '' || soluongve <= 0 || sodt.trim() === '' || email.trim() === '') {
                     $('#thongbao').html('<p class="error-msg">Vui lòng nhập đầy đủ thông tin.</p>');
                     return;
                 }
-
-                // Gửi dữ liệu đặt vé lên server
+            
                 $.ajax({
                     type: 'POST',
-                    url: 'http://localhost:3001/datve',
+                    url: 'https://67f8cc292466325443edda28.mockapi.io/datve',
                     contentType: 'application/json',
                     data: JSON.stringify({
                         tenkhachhang: tenkhachhang,
+                        sodienthoai: sodt,
+                        email: email,
                         soluongve: soluongve,
                         tenrap: $("#rapphim option:selected").text(),
-                        gheduocchon: selectedSeats.join(', '), // ghế đã chọn
+                        gheduocchon: selectedSeats.join(', ')
                     }),
                     success: function(response) {
-                        // Xử lý thành công
-                        const tenPhim = decodeURIComponent(tenphim); // lấy trực tiếp từ URL đã có sẵn
-                        const selectedRapValue = document.getElementById("rapphim").value;
-                        const selectedRapTen = $("#rapphim option:selected").text(); // hoặc lấy từ biến data nếu cần
-                        window.location.href = `thanhtoan.html?tenkhachhang=${encodeURIComponent(tenkhachhang)}&giave=${encodeURIComponent(giave)}&tenphim=${encodeURIComponent(tenphim)}&tenrap=${encodeURIComponent(selectedRapTen)}&soluong=${encodeURIComponent(soluongve)}&ghe=${encodeURIComponent(selectedSeats.join(','))}`;
+                        const selectedRapTen = $("#rapphim option:selected").text();
+                        window.location.href = `thanhtoan.html?tenkhachhang=${encodeURIComponent(tenkhachhang)}&giave=${encodeURIComponent(giave)}&tenphim=${encodeURIComponent(tenphim)}&tenrap=${encodeURIComponent(selectedRapTen)}&soluong=${encodeURIComponent(soluongve)}&ghe=${encodeURIComponent(selectedSeats.join(','))}&sodt=${encodeURIComponent(sodt)}&email=${encodeURIComponent(email)}&sodt=${sodt}&email=${email}`;
                     },
                     error: function(xhr, status, error) {
-                        // Xử lý lỗi
                         $('#thongbao').html('<p class="error-msg">Đặt vé thất bại. Vui lòng thử lại sau.</p>');
                     }
                 });
             };
             
             
+            
         });
     </script>
 </body>
 </html>
+``` 
