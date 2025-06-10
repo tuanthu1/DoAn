@@ -55,6 +55,7 @@
                       $.each(data, function(index, admin) {
                         if (admin.username === username && admin.password === password) {
                           isValid = true;
+                            arlet('Đăng nhập thành công');
                           return false; // dừng lặp
                         }
                       });
@@ -64,7 +65,7 @@
                         localStorage.setItem("adminLoggedIn", "true");
                         window.location.href = 'quanly.html';
                       } else {
-                        alert('Thông tin đăng nhập không chính xác!');
+                        $('#flash').text('Thông tin đăng nhập không chính xác!').css('color', 'red');
                       }
                     },
                     error: function() {
