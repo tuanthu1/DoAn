@@ -55,7 +55,7 @@
                       $.each(data, function(index, admin) {
                         if (admin.username === username && admin.password === password) {
                           isValid = true;
-                            arlet('Đăng nhập thành công');
+                            $('#flash').text('Đăng nhập thành công').css('color', 'red');
                           return false; // dừng lặp
                         }
                       });
