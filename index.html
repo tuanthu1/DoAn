@@ -238,7 +238,7 @@
             height: 100px;
             border-radius: 50%;
         }
-/*         #overlay {
+        #overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -271,11 +271,11 @@
             background-color: rgb(51, 51, 51);
             padding: 16px;
           
-          } */
+          }
     </style>
 </head>
     <body>
-<!--         <div id="overlay"> -->
+        <div id="overlay">
         </div>
         <header class=" bg-dark text-white custom-bg custom-text" style="background-color: #00879c !important; color: #000000 !important;">
             <div class="container">
@@ -510,44 +510,44 @@
                     });
                 }
             });
-            // Tạo overlay
-            // var overlay = document.getElementById("overlay");
+            Tạo overlay
+            var overlay = document.getElementById("overlay");
             
 
-            // // Tạo phần tử div cho phần text
-            // var textDiv = document.createElement("div");
-            // textDiv.id = "text";
+            // Tạo phần tử div cho phần text
+            var textDiv = document.createElement("div");
+            textDiv.id = "text";
 
-            // /// Tạo phần tử p cho dòng chữ "Welcome to my website"
-            // var welcomeText = document.createElement("p");
-            // welcomeText.style.fontFamily = "Quicksand";
-            // welcomeText.style.fontSize = "15px";
-            // welcomeText.textContent = "CHÀO MỪNG ĐẾN VỚI TRANG WEB ĐẶT VÉ XEM PHIM";
-            // welcomeText.style.marginBottom = "10px"; // Khoảng cách dưới 10px
-
-
-            // // Tạo phần tử p cho dòng chữ "- Nhấn để tiếp tục -"
-            // var continueText = document.createElement("p");
-            // continueText.style.fontFamily = "Quicksand";
-            // continueText.style.fontSize = "15px";
-            // continueText.textContent = "- Click to continue -";
+            /// Tạo phần tử p cho dòng chữ "Welcome to my website"
+            var welcomeText = document.createElement("p");
+            welcomeText.style.fontFamily = "Quicksand";
+            welcomeText.style.fontSize = "15px";
+            welcomeText.textContent = "CHÀO MỪNG ĐẾN VỚI TRANG WEB ĐẶT VÉ XEM PHIM";
+            welcomeText.style.marginBottom = "10px"; // Khoảng cách dưới 10px
 
 
-            // textDiv.appendChild(welcomeText);
-            // textDiv.appendChild(continueText);
+            // Tạo phần tử p cho dòng chữ "- Nhấn để tiếp tục -"
+            var continueText = document.createElement("p");
+            continueText.style.fontFamily = "Quicksand";
+            continueText.style.fontSize = "15px";
+            continueText.textContent = "- Click to continue -";
 
-            // // Thêm phần tử textDiv vào overlay
-            // overlay.appendChild(textDiv);
 
-            // // Thêm overlay vào body
-            // document.body.appendChild(overlay);
+            textDiv.appendChild(welcomeText);
+            textDiv.appendChild(continueText);
 
-            // // Thiết lập sự kiện click cho overlay
-            // overlay.addEventListener("click", function () {
-            //     // Ẩn overlay
-            //     overlay.style.display = "none";
+            // Thêm phần tử textDiv vào overlay
+            overlay.appendChild(textDiv);
 
-                // Thêm mã JavaScript của bạn để bắt đầu phát nhạc hoặc thực hiện các hành động khác ở đây
+            // Thêm overlay vào body
+            document.body.appendChild(overlay);
+
+            // Thiết lập sự kiện click cho overlay
+            overlay.addEventListener("click", function () {
+                // Ẩn overlay
+                overlay.style.display = "none";
+
+                Thêm mã JavaScript của bạn để bắt đầu phát nhạc hoặc thực hiện các hành động khác ở đây
             });
 
             // Thêm hiệu ứng fadeIn bằng CSS
