@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link class="img" rel="icon" href="/DoAn/img/gcv.jpg" type="image/x-icon">
+    <link class="img" rel="icon" href="/BTL/img/gcv.jpg" type="image/x-icon">
     <title>Trang Chủ - Bán Vé Xem Phim Online</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -280,7 +280,7 @@
         <header class=" bg-dark text-white custom-bg custom-text" style="background-color: #00879c !important; color: #000000 !important;">
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-dark">
-                    <a class="navbar-brand" href="#"><img src="/DoAn/img/logo.png" alt=""></a>
+                    <a class="navbar-brand" href="#"><img src="/BTL/img/logo.png" alt=""></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -318,16 +318,16 @@
               </ol>
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <a href="#"><img src="/DoAn/img/cmgh.jpg" class="d-block w-100" alt="Cưới Ma Giải Hạn" ></a>
+                  <a href="http://127.0.0.1:5501/trangchitiet.html?id=5558&tenphim=C%C6%B0%E1%BB%9Bi%20Ma%20Gi%E1%BA%A3i%20H%E1%BA%A1n&poster=https%3A%2F%2Fimage-worker.momocdn.net%2Fimg%2F80095524311539189-cuoima.png%3Fsize%3DM%26referer%3Dcinema.momocdn.net&maphim=123&giochieu=2025-04-20T21:00&gioketthuc=2025-04-20T22:30&soluongghengoi=100&giave=70"><img src="/BTL/img/cmgh.jpg" class="d-block w-100" alt="Cưới Ma Giải Hạn" ></a>
                 </div>
                 <div class="carousel-item">
-                  <a href="#"><img src="/DoAn/img/diadao.jpg" class="d-block w-100" alt="Địa Đạo" ></a>
+                  <a href="http://127.0.0.1:5501/trangchitiet.html?id=907b&tenphim=%C4%90%E1%BB%8Ba%20%C4%90%E1%BA%A1o%3A%20M%E1%BA%B7t%20Tr%E1%BB%9Di%20Trong%20B%C3%B3ng%20T%E1%BB%91i&poster=https%3A%2F%2Fimage-worker.momocdn.net%2Fimg%2F49570119034833228-aaaaaaa.png%3Fsize%3DM%26referer%3Dcinema.momocdn.net&maphim=121&giochieu=2025-07-01T16:16&gioketthuc=2025-07-01T17:16&soluongghengoi=100&giave=60"><img src="/BTL/img/diadao.jpg" class="d-block w-100" alt="Địa Đạo" ></a>
                 </div>
                 <div class="carousel-item">
-                  <a href="#movie-list"><img src="/DoAn/img/phimt4.png" class="d-block w-100" alt="Phim T4" ></a>
+                  <a href="#movie-list"><img src="/BTL/img/phimt4.png" class="d-block w-100" alt="Phim T4" ></a>
                 </div>
                 <div class="carousel-item">
-                    <a href="#"><img src="/DoAn/img/ttk.jpg" class="d-block w-100" alt="Thám tử kiên" ></a>
+                    <a href="http://127.0.0.1:5501/trangchitiet.html?id=2932&tenphim=TH%C3%81M%20T%E1%BB%AC%20KI%C3%8AN%3A%20K%E1%BB%B2%20%C3%81N%20KH%C3%94NG%20%C4%90%E1%BA%A6U&poster=https%3A%2F%2Fproduct.hstatic.net%2F1000296517%2Fproduct%2Fbp_k_f36a419de35440889d05e5b22a05ce12_master.jpg&maphim=111&giochieu=2025-05-23T20:30&gioketthuc=2025-05-23T22:00&soluongghengoi=200&giave=80"><img src="/BTL/img/ttk.jpg" class="d-block w-100" alt="Thám tử kiên" ></a>
                   </div>
               </div>
               <a class="carousel-control-prev" href="#bannerCarousel" role="button" data-slide="prev">
@@ -354,6 +354,17 @@
             <div class="container">
             <div class="row" id="movie-list">
                 <!-- Các thẻ phim sẽ được chèn vào đây -->
+                <div id="list-movie">
+                    <!-- Các item phim ở đây -->
+                </div>
+                
+                <div class="text-center mt-4">
+                    <button id="show-all-btn" style="display: none;" class="btn btn-secondary">
+                      Xem tất cả <span id="total-count"></span> phim
+                    </button>
+                  </div>
+                  
+                
             </div>
             <div class="row" id="movie-list-special">
                 <!-- xuất đặc biệt sẽ được thêm vào đây -->
@@ -381,7 +392,7 @@
             <div class="footer-container">
                 <!-- Logo -->
                 <div class="footer-logo">
-                    <a href="#"><img style="display: block; width: 100px; height:100px;" src="/DoAn/img/gcv.jpg" alt="MV Logo"></a>
+                    <a href="#"><img style="display: block; width: 100px; height:100px;" src="/BTL/img/gcv.jpg" alt="MV Logo"></a>
                 </div>
     
                 <!-- Company Info -->
@@ -396,23 +407,23 @@
                 <div class="footer-partners">
                     <h3>ĐỐI TÁC</h3>
                     <div class="partner-logos">
-                        <a href="https://betacinemas.vn/" ><img src="/DoAn/img/logobetacnm.png" alt="Beta Cinemas"></a>
-                        <a href="https://www.megagscinemas.vn/"><img src="/DoAn/img/mega.jpg" alt="Mega GS"></a>
-                        <a href="https://cinestar.com.vn/"><img src="/DoAn/img/cinesta.png" alt="Cinestar"></a>
-                        <a href="https://dcine.vn/"><img src="/DoAn/img/dcine.png" alt="DCine"></a>
-                        <a href="https://cinemaxvn.com/"><img src="/DoAn/img/cinemax.png" alt="Cinema"></a>
-                        <a href="https://starlight.vn/"><img src="/DoAn/img/starlight.jpg" alt="Starlight"></a>
-                        <a href="https://riocinema.vn/"><img src="/DoAn/img/rio.png" alt="Rio Cinemas"></a>
-                        <a href="https://ddcinema.vn/"><img src="/DoAn/img/dd.jpg" alt="DDC"></a>
-                        <a href="https://touchcinema.com/"><img src="/DoAn/img/touch.jpg" alt="Touch Cinema"></a>
-                        <a href="https://momo.vn/"><img src="/DoAn/img/momo.png" alt="MoMo"></a>
-                        <a href="https://zalopay.vn/"><img src="/DoAn/img/zlpay.jpg" alt="ZaloPay"></a>
+                        <a href="https://betacinemas.vn/" ><img src="/BTL/img/logobetacnm.png" alt="Beta Cinemas"></a>
+                        <a href="https://www.megagscinemas.vn/"><img src="/BTL/img/mega.jpg" alt="Mega GS"></a>
+                        <a href="https://cinestar.com.vn/"><img src="/BTL/img/cinesta.png" alt="Cinestar"></a>
+                        <a href="https://dcine.vn/"><img src="/BTL/img/dcine.png" alt="DCine"></a>
+                        <a href="https://cinemaxvn.com/"><img src="/BTL/img/cinemax.png" alt="Cinema"></a>
+                        <a href="https://starlight.vn/"><img src="/BTL/img/starlight.jpg" alt="Starlight"></a>
+                        <a href="https://riocinema.vn/"><img src="/BTL/img/rio.png" alt="Rio Cinemas"></a>
+                        <a href="https://ddcinema.vn/"><img src="/BTL/img/dd.jpg" alt="DDC"></a>
+                        <a href="https://touchcinema.com/"><img src="/BTL/img/touch.jpg" alt="Touch Cinema"></a>
+                        <a href="https://momo.vn/"><img src="/BTL/img/momo.png" alt="MoMo"></a>
+                        <a href="https://zalopay.vn/"><img src="/BTL/img/zlpay.jpg" alt="ZaloPay"></a>
                     </div>
                 </div>
     
                 <!-- Certification -->
                 <div class="footer-certification">
-                    <img src="/DoAn/img/datb.png" alt="Certification">
+                    <img src="/BTL/img/datb.png" alt="Certification">
                 </div>
             </div>
             <div class="container">
@@ -421,6 +432,16 @@
         </footer>
         
         <script>  
+            document.addEventListener("DOMContentLoaded", function() {
+                const listMovie = document.getElementById("list-movie");
+                const movies = listMovie.querySelectorAll(".card");
+                const showAllBtn = document.getElementById("show-all-btn");
+                const totalCount = document.getElementById("total-count");
+                if(movies.length > 3) {
+                    showAllBtn.style.display = "inline-block";
+                    totalCount.textContent = movies.length ;
+                }
+            });
             const tabs = document.querySelectorAll('.tab');
             tabs.forEach(tab => {
             tab.addEventListener('click', () => {
@@ -510,7 +531,7 @@
                     });
                 }
             });
-            Tạo overlay
+            // Tạo overlay
             var overlay = document.getElementById("overlay");
             
 
@@ -547,7 +568,7 @@
                 // Ẩn overlay
                 overlay.style.display = "none";
 
-                Thêm mã JavaScript của bạn để bắt đầu phát nhạc hoặc thực hiện các hành động khác ở đây
+                // Thêm mã JavaScript của bạn để bắt đầu phát nhạc hoặc thực hiện các hành động khác ở đây
             });
 
             // Thêm hiệu ứng fadeIn bằng CSS
