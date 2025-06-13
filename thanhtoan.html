@@ -184,6 +184,7 @@
 
       <label for="bank">Ngân hàng:</label>
       <select id="bank" class="form-control" required onchange="validateBankSelection()">
+        <option id="none" value="" disabled selected>Chọn ngân hàng</option>
         <option>Vietcombank</option>
         <option>ACB</option>
         <option>MB Bank</option>
@@ -193,7 +194,9 @@
         <option>Techcombank</option>
       </select>
       <p class="mt-3"><strong>Nội dung chuyển khoản:</strong> <span id="noidung"></span></p>
+      <p id="thongbao"></p>
     </div>
+    
 
     <button class="btn" id="showPaymentInfo" onclick="showPaymentInfo()">Hiển Thị Thông Tin Thanh Toán</button>
     <button class="btn" id="confirmPayment" onclick="xacNhan()" style="display: none;">Xác Nhận Thanh Toán</button>
@@ -268,14 +271,21 @@
     let isConfirmed = false;
     //chọn ngân hàng
     function validateBankSelection() {
+      const nullop = document.getElementById("none");
+      nullop.disabled = true; // vô hiệu hóa tùy chọn "Chọn ngân hàng"
+      
       const bankSelect = document.getElementById("bank");
-      if (bankSelect.value === "") {
-    alert("Vui lòng chọn ngân hàng trước khi tiếp tục.");
+      if (bankSelect.value === nullop.value) {
+        // nếu không chọn ngân hàng
+        $("#thongbao").text("Vui lòng chọn ngân hàng để tiếp tục.").css("color", "red");
+        isConfirmed = false;
+      } else {
+        $("#thongbao").text("Thành công"); // xóa thông báo nếu đã chọn ngân hàng
+        isConfirmed = true;
       }
     }
     //xác nhận thanh toán
     function xacNhan() {
-      
       const nullop = document.getElementById("none");
       const bankSelect = document.getElementById("bank");
       if (!bankSelect.value) {
@@ -315,7 +325,7 @@
           giave: parseInt(giave),
           ngaydatve: new Date().toLocaleDateString(),
           tenrap: document.getElementById("tenrap").innerText,
-          tongtien: tongTien + ".000",
+          tongtien: tongTien + ".000 VND",
           trangthai: "✅Đã thanh toán",
         };
         fetch('https://67f8cc292466325443edda28.mockapi.io/datve', {
