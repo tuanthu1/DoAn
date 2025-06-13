@@ -63,7 +63,14 @@
                         $('#error').text('Mật khẩu không được để trống!').css('color', 'red');
                         isValid = false; // nếu username hoặc password rỗng thì không hợp lệ
                       }
-                      
+                      else if (!data.some(admin => admin.username === username)) {
+                        $('#error').text('Tài khoản không tồn tại!').css('color', 'red');
+                        isValid = false;
+                      }
+                      else if (!data.some(admin => admin.username === username && admin.password === password)) {
+                        $('#error').text('Mật khẩu không đúng!').css('color', 'red');
+                        isValid = false;
+                      }
                       else if (username != 'admin') {
                         $('#error').text('Tài khoản không tồn tại!').css('color', 'red');
                         isValid = false;
