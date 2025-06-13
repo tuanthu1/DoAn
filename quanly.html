@@ -1016,8 +1016,9 @@
                 contentType: "application/json",
                 data: JSON.stringify(formData),
                 success: function() {
+                    
+                    $('#error').text("Thêm phim thành công.");
                     loadMovies();
-                    alert('Thêm phim thành công!');
                 },
                 error: function() {
                     alert('Đã xảy ra lỗi khi thêm phim.');
