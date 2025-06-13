@@ -532,26 +532,26 @@
                 movieTypeList.style.display = "none";
             });
         });
-        if (document.referrer.indexOf("login.html") === -1) {
-            alert("Bạn không có quyền truy cập vui lòng đăng nhập! .");
-            window.location.href = "login.html";
-        }
-        // Kiểm tra trạng thái đăng nhập
-        if (localStorage.getItem("adminLoggedIn") !== "true") {
-            alert("Bạn không có quyền truy cập vào trang này.");
-            window.location.href = "login.html";
-        }
-        if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
-            console.log("Trang đã được tải lại nhưng vẫn giữ trạng thái đăng nhập.");
-            } else {
-            // Lưu trạng thái đăng nhập để không bị đăng xuất
-            localStorage.setItem("adminLoggedIn", "true");
-            // Kiểm tra nếu trang bị tải lại thì vẫn giữ trạng thái đăng nhập
-            if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
-                console.log("Trang đã được tải lại nhưng vẫn giữ trạng thái đăng nhập.");
-            } 
+        // if (document.referrer.indexOf("login.html") === -1) {
+        //     alert("Bạn không có quyền truy cập vui lòng đăng nhập! .");
+        //     window.location.href = "login.html";
+        // }
+        // // Kiểm tra trạng thái đăng nhập
+        // if (localStorage.getItem("adminLoggedIn") !== "true") {
+        //     alert("Bạn không có quyền truy cập vào trang này.");
+        //     window.location.href = "login.html";
+        // }
+        // if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+        //     console.log("Trang đã được tải lại nhưng vẫn giữ trạng thái đăng nhập.");
+        //     } else {
+        //     // Lưu trạng thái đăng nhập để không bị đăng xuất
+        //     localStorage.setItem("adminLoggedIn", "true");
+        //     // Kiểm tra nếu trang bị tải lại thì vẫn giữ trạng thái đăng nhập
+        //     if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+        //         console.log("Trang đã được tải lại nhưng vẫn giữ trạng thái đăng nhập.");
+        //     } 
             
-        }
+        // }
         function loadMovies() { 
             $.get("https://67f8c4ac2466325443edb69f.mockapi.io/Phim", function(data) {
                 var movieList = $('#movie-list');
