@@ -921,7 +921,46 @@
             var maphim = $('#maphim').val().trim();
             var poster = $('#poster').val().trim();
 
-            
+            if (rapphim === '') {
+                $('#error').text("Vui lòng điền đầy đủ thông tin.");
+                return false;
+            }
+            if( loaiphim === '') {
+                $('#error').text("Vui lòng chọn loại phim.");
+                return false;
+            }
+            if (tenphim === '') {
+                $('#error').text("Vui lòng nhập tên phim.");
+                return false;
+            }
+            if (giochieu === '') {
+                $('#error').text("Vui lòng nhập giờ chiếu.");
+                return false;
+            }
+            if(gioketthuc === '') {
+                $('#error').text("Vui lòng nhập giờ kết thúc.");
+                return false;
+            }
+            if (soluongghengoi === '') {
+                $('#error').text("Vui lòng nhập số lượng ghế ngồi.");
+                return false;
+            }
+            if (soluongghecontrong === '') {
+                $('#error').text("Vui lòng nhập số lượng ghế còn trống.");
+                return false;
+            }
+            if (giave === '') {
+                $('#error').text("Vui lòng nhập giá vé.");
+                return false;
+            }
+            if (maphim === '') {
+                $('#error').text("Vui lòng nhập mã phim.");
+                return false;
+            }
+            if (poster === '') {
+                $('#error').text("Vui lòng nhập URL poster.");
+                return false;
+            }
             if (isNaN(soluongghengoi) || isNaN(soluongghecontrong) || isNaN(giave) || isNaN(maphim)) {
                 $('#error').text("Vui lòng nhập đúng định dạng số cho các trường số.");
                 return false;
