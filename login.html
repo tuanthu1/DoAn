@@ -51,6 +51,7 @@
                       var isValid = false;
                       $.each(data, function(index, admin) {
                         if (admin.username === username && admin.password === password) {
+                            $('#error').text('Đăng nhập thành công!').css('color', 'red');
                           isValid = true;
                           return false; // dừng lặp
                         }
