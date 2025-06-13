@@ -921,23 +921,20 @@
             var maphim = $('#maphim').val().trim();
             var poster = $('#poster').val().trim();
 
-            if (rapphim === '' || loaiphim === '' || tenphim === '' || giochieu === '' || gioketthuc === '' || soluongghengoi === '' || soluongghecontrong === '' || giave === '' || maphim === '' || poster === '') {
-                $('#error').text("Vui lòng điền đầy đủ thông tin.");
-                return false;
-            }
+            
             if (isNaN(soluongghengoi) || isNaN(soluongghecontrong) || isNaN(giave) || isNaN(maphim)) {
                 $('#error').text("Vui lòng nhập đúng định dạng số cho các trường số.");
                 return false;
             }
-            if (parseInt(soluongghengoi) <= 0 || parseInt(soluongghecontrong) <= 0 || parseInt(giave) <= 0 || parseInt(maphim) <= 0) {
+            else if (parseInt(soluongghengoi) <= 0 || parseInt(soluongghecontrong) <= 0 || parseInt(giave) <= 0 || parseInt(maphim) <= 0) {
                 $('#error').text("Số lượng ghế, số ghế trống, giá vé và mã phim phải lớn hơn 0.");
                 return false;
             }
-            if (new Date(giochieu) >= new Date(gioketthuc)) {
+            else if (new Date(giochieu) >= new Date(gioketthuc)) {
                 $('#error').text("Giờ chiếu phải trước giờ kết thúc.");
                 return false;
             }
-            if (!isValidURL(poster)) {
+            else if (!isValidURL(poster)) {
                 $('#error').text("Poster không hợp lệ. Vui lòng nhập URL hợp lệ.");
                 return false;
             }
@@ -949,35 +946,35 @@
                     throw new Error("Mã phim trùng");
                 }
                 // Kiểm tra các trường bắt buộc
-                if ($('#movieTypeName').val().trim() === "") {
+                else if ($('#movieTypeName').val().trim() === "") {
                     $('#error').text("Thiếu tên phim.");
                     throw new Error("Thiếu tên phim");
                 }
-                if ($('#giochieu').length && $('#giochieu').val().trim() === "") {
+                else if ($('#giochieu').length && $('#giochieu').val().trim() === "") {
                     $('#error').text("Thiếu giờ chiếu.");
                     throw new Error("Thiếu giờ chiếu");
                 }
-                if ($('#gioketthuc').length && $('#gioketthuc').val().trim() === "") {
+                else if ($('#gioketthuc').length && $('#gioketthuc').val().trim() === "") {
                     $('#error').text("Thiếu giờ kết thúc.");
                     throw new Error("Thiếu giờ kết thúc");
                 }
-                if ($('#loaiphim').length && $('#loaiphim').val().trim() === "") {
+                else if ($('#loaiphim').length && $('#loaiphim').val().trim() === "") {
                     $('#error').text("Thiếu loại phim.");
                     throw new Error("Thiếu loại phim");
                 }
-                if ($('#soluongghengoi').length && $('#soluongghengoi').val().trim() === "") {
+                else if ($('#soluongghengoi').length && $('#soluongghengoi').val().trim() === "") {
                     $('#error').text("Thiếu số ghế.");
                     throw new Error("Thiếu số ghế");
                 }
-                if ($('#soluongghecontrong').length && $('#soluongghecontrong').val().trim() === "") {
+                else if ($('#soluongghecontrong').length && $('#soluongghecontrong').val().trim() === "") {
                     $('#error').text("Thiếu số ghế trống.");
                     throw new Error("Thiếu số ghế trống");
                 }
-                if ($('#giave').length && $('#giave').val().trim() === "") {
+                else if ($('#giave').length && $('#giave').val().trim() === "") {
                     $('#error').text("Thiếu giá vé.");
                     throw new Error("Thiếu giá vé");
                 }
-                if ($('#poster').length && $('#poster').val().trim() === "") {
+                else if ($('#poster').length && $('#poster').val().trim() === "") {
                     $('#error').text("Thiếu poster.");
                     throw new Error("Thiếu poster");
                 }
