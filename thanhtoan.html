@@ -334,7 +334,8 @@
             body: JSON.stringify(ve)
           })
 
-            $("#thongbao").text("Thanh toán thành công! Cảm ơn bạn đã đặt vé, chúng tôi sẽ liên hệ với bạn qua số điện thoại.");
+            document.getElementById("thongbao").innerText = "Thanh toán thành công! Cảm ơn bạn đã đặt vé, chúng tôi sẽ liên hệ với bạn qua số điện thoại.";
+            document.getElementById("thongbao").style.color = "green";
             window.location.href = "index.html";
             document.getElementById("btnXacNhan").disabled = true;
 }
