@@ -63,10 +63,7 @@
                         $('#error').text('Mật khẩu không được để trống!').css('color', 'red');
                         isValid = false; // nếu username hoặc password rỗng thì không hợp lệ
                       }
-                      else if (username.length < 3 || password.length < 6) {
-                        $('#error').text('Tên đăng nhập phải có ít nhất 3 ký tự và mật khẩu ít nhất 6 ký tự!').css('color', 'red');
-                        isValid = false; // nếu username hoặc password không đủ độ dài thì không hợp lệ
-                      }
+                      
                       else if (username != 'admin') {
                         $('#error').text('Tài khoản không tồn tại!').css('color', 'red');
                         isValid = false;
@@ -76,7 +73,7 @@
                         // Chuyển hướng đến trang admin
                         window.location.href = 'quanly.html';
                       } else {
-                        $('#error').text('Tài khoản hoặc mật khẩu không đúng!').css('color', 'red');
+                        $('#error').text('Vui lòng nhập đầy đủ thông tin!').css('color', 'red');
                       }
                       
                     },
