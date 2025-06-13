@@ -60,7 +60,7 @@
                         }
                       });
                       if (username === '' || password === '') {
-                        $('#error').text('Tài khoản hoặc mật khẩu không được để trống!').css('color', 'red');
+                        $('#error').text('Vui lòng nhập đầy đủ thông tin!').css('color', 'red');
                         isValid = false; // nếu username hoặc password rỗng thì không hợp lệ
                       }
                       if (username.length < 3 || password.length < 6) {
@@ -76,13 +76,7 @@
                         $('#error').text('Tài khoản không tồn tại!').css('color', 'red');
                         isValid = false;
                         }
-                      if (isValid) {
-                        // Ghi trạng thái vào localStorage (nếu cần)
-                        localStorage.setItem("adminLoggedIn", "true");
-                        window.location.href = 'quanly.html';
-                      } else {
-                        $('#flash').text('Vui lòng nhập đầy đủ thông tin!').css('color', 'red');
-                      }
+                      
                     },
                     error: function() {
                         $('#flash').text('Không thể kết nối tới máy chủ!').css('color', 'red');
