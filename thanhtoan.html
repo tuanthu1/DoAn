@@ -287,12 +287,6 @@
       } else {
         document.getElementById("thongbao").innerText = "";
       }
-      if (!isConfirmed) {
-        alert("Vui lòng kiểm tra thông tin thanh toán trước khi xác nhận.");
-        isConfirmed = true;
-        document.getElementById("payment").scrollIntoView({ behavior: "smooth" });
-        return;
-      }
         const params = new URLSearchParams(window.location.search);
         const marap = params.get("tenrap"); // ví dụ: beta-my-dinh
         
