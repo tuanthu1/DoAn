@@ -59,13 +59,29 @@
                           return false; // dừng lặp
                         }
                       });
-                  
+                      if (username === '' || password === '') {
+                        $('#error').text('Tài khoản hoặc mật khẩu không được để trống!').css('color', 'red');
+                        isValid = false; // nếu username hoặc password rỗng thì không hợp lệ
+                      }
+                      if (username.length < 3 || password.length < 6) {
+                        $('#error').text('Tên đăng nhập phải có ít nhất 3 ký tự và mật khẩu ít nhất 6 ký tự!').css('color', 'red');
+                        isValid = false; // nếu username hoặc password không đủ độ dài thì không hợp lệ
+                      }
+                        // Kiểm tra nếu tài khoản hoặc mật khẩu không có trong localStorage
+                        var storedUsers = JSON.parse(localStorage.getItem('adminUsers') || '[]');
+                        var foundInLocal = storedUsers.some(function(user) {
+                        return user.username === username && user.password === password;
+                        });
+                        if (!foundInLocal) {
+                        $('#error').text('Tài khoản không tồn tại!').css('color', 'red');
+                        isValid = false;
+                        }
                       if (isValid) {
                         // Ghi trạng thái vào localStorage (nếu cần)
                         localStorage.setItem("adminLoggedIn", "true");
                         window.location.href = 'quanly.html';
                       } else {
-                        $('#flash').text('Thông tin đăng nhập không chính xác!').css('color', 'red');
+                        $('#flash').text('Vui lòng nhập đầy đủ thông tin!').css('color', 'red');
                       }
                     },
                     error: function() {
