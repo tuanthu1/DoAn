@@ -364,7 +364,19 @@
                     $('#thongbao').html('<p class="error-msg">Vui lòng chọn ghế ngồi.</p>');
                     return false;
                 }
-
+                var soluongve = parseInt($('#soluongve').val());
+                if (soluongve > totalSeats) {
+                    $('#thongbao').html('<p class="error-msg">Số lượng vé không được lớn hơn số lượng ghế ngồi.</p>');
+                    return false;
+                }
+                if (soluongve <= 0) {
+                    $('#thongbao').html('<p class="error-msg">Số lượng vé phải lớn hơn 0.</p>');
+                    return false;
+                }
+                if (soluongve > selectedSeats.length) {
+                    $('#thongbao').html('<p class="error-msg">Số lượng vé không được lớn hơn số ghế đã chọn.</p>');
+                    return false;
+                }
                 return true; // Trả về true nếu tất cả hợp lệ
             }
             // Hiển thị thông tin phim
