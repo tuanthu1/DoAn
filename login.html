@@ -8,9 +8,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     </head>
     <body>
-        <script>
-            
-        </script>
+       
         <div id="login-box" class="login">
             <p class="login_title">Bạn là admin? Hãy đăng nhập.</p>
             <a href="#" class="close"><img src="/DoAn/img/close.png" class="img-close" title="Close Window" alt="Close" /></a>
@@ -55,10 +53,9 @@
                       $.each(data, function(index, admin) {
                         if (admin.username === username && admin.password === password) {
                           isValid = true;
-                            $('#flash').text('Đăng nhập thành công').css('color', 'red');
                           return false; // dừng lặp
                         }
-                      });
+                        });
                       if (username === '') {
                         $('#error').text('Tài khoản không được để trống!').css('color', 'red');
                         isValid = false; // nếu username hoặc password rỗng thì không hợp lệ
@@ -85,14 +82,14 @@
                       
                     },
                     error: function() {
-                        $('#flash').text('Không thể kết nối tới máy chủ!').css('color', 'red');
+                      alert('Không thể kết nối tới máy chủ!');
                     }
                   });                  
             });
                 // khi click đóng hộp thoại
                 $(document).on('click', "a.close, #over", function() { 
                     if ($('#username').val() === '' || $('#password').val() === '') {
-                        $('#flash').text('Bạn không phải là admin!, vui lòng nhập thông tin đăng nhập!').css('color', 'red');
+                        alert('Bạn không phải là admin!, vui lòng nhập thông tin đăng nhập!');
                         return false;
                     }
                     $('#over, .login').fadeOut(300 , function() {
