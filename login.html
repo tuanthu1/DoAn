@@ -75,9 +75,9 @@
                         $('#error').text('Tài khoản không tồn tại!').css('color', 'red');
                         isValid = false;
                         }
-                      else if( isValid) {
-                        $('#error').text('Đăng nhập thành công!').css('color', 'green');
-                        // Chuyển hướng đến trang admin
+                      else if (isValid) {
+                        // Ghi trạng thái vào localStorage (nếu cần)
+                        localStorage.setItem("adminLoggedIn", "true");
                         window.location.href = 'quanly.html';
                       } else {
                         $('#error').text('Vui lòng nhập đầy đủ thông tin!').css('color', 'red');
