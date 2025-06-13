@@ -926,15 +926,15 @@
                 $('#error').text("Vui lòng nhập đúng định dạng số cho các trường số.");
                 return false;
             }
-            else if (parseInt(soluongghengoi) <= 0 || parseInt(soluongghecontrong) <= 0 || parseInt(giave) <= 0 || parseInt(maphim) <= 0) {
+            if (parseInt(soluongghengoi) <= 0 || parseInt(soluongghecontrong) <= 0 || parseInt(giave) <= 0 || parseInt(maphim) <= 0) {
                 $('#error').text("Số lượng ghế, số ghế trống, giá vé và mã phim phải lớn hơn 0.");
                 return false;
             }
-            else if (new Date(giochieu) >= new Date(gioketthuc)) {
+            if (new Date(giochieu) >= new Date(gioketthuc)) {
                 $('#error').text("Giờ chiếu phải trước giờ kết thúc.");
                 return false;
             }
-            else if (!isValidURL(poster)) {
+            if (!isValidURL(poster)) {
                 $('#error').text("Poster không hợp lệ. Vui lòng nhập URL hợp lệ.");
                 return false;
             }
@@ -946,35 +946,35 @@
                     throw new Error("Mã phim trùng");
                 }
                 // Kiểm tra các trường bắt buộc
-                else if ($('#movieTypeName').val().trim() === "") {
+                if ($('#movieTypeName').val().trim() === "") {
                     $('#error').text("Thiếu tên phim.");
                     throw new Error("Thiếu tên phim");
                 }
-                else if ($('#giochieu').length && $('#giochieu').val().trim() === "") {
+                if ($('#giochieu').length && $('#giochieu').val().trim() === "") {
                     $('#error').text("Thiếu giờ chiếu.");
                     throw new Error("Thiếu giờ chiếu");
                 }
-                else if ($('#gioketthuc').length && $('#gioketthuc').val().trim() === "") {
+                if ($('#gioketthuc').length && $('#gioketthuc').val().trim() === "") {
                     $('#error').text("Thiếu giờ kết thúc.");
                     throw new Error("Thiếu giờ kết thúc");
                 }
-                else if ($('#loaiphim').length && $('#loaiphim').val().trim() === "") {
+                if ($('#loaiphim').length && $('#loaiphim').val().trim() === "") {
                     $('#error').text("Thiếu loại phim.");
                     throw new Error("Thiếu loại phim");
                 }
-                else if ($('#soluongghengoi').length && $('#soluongghengoi').val().trim() === "") {
+                if ($('#soluongghengoi').length && $('#soluongghengoi').val().trim() === "") {
                     $('#error').text("Thiếu số ghế.");
                     throw new Error("Thiếu số ghế");
                 }
-                else if ($('#soluongghecontrong').length && $('#soluongghecontrong').val().trim() === "") {
+                if ($('#soluongghecontrong').length && $('#soluongghecontrong').val().trim() === "") {
                     $('#error').text("Thiếu số ghế trống.");
                     throw new Error("Thiếu số ghế trống");
                 }
-                else if ($('#giave').length && $('#giave').val().trim() === "") {
+                if ($('#giave').length && $('#giave').val().trim() === "") {
                     $('#error').text("Thiếu giá vé.");
                     throw new Error("Thiếu giá vé");
                 }
-                else if ($('#poster').length && $('#poster').val().trim() === "") {
+                if ($('#poster').length && $('#poster').val().trim() === "") {
                     $('#error').text("Thiếu poster.");
                     throw new Error("Thiếu poster");
                 }
