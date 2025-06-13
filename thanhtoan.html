@@ -276,7 +276,17 @@
     //xác nhận thanh toán
     function xacNhan() {
       
-
+      const nullop = document.getElementById("none");
+      const bankSelect = document.getElementById("bank");
+      if (!bankSelect.value) {
+        // nếu không chọn ngân hàng
+        document.getElementById("thongbao").innerText = "Vui lòng chọn ngân hàng để tiếp tục.";
+        document.getElementById("thongbao").style.color = "red";
+        document.getElementById("payment").scrollIntoView({ behavior: "smooth" });
+        return;
+      } else {
+        document.getElementById("thongbao").innerText = "";
+      }
       if (!isConfirmed) {
         alert("Vui lòng kiểm tra thông tin thanh toán trước khi xác nhận.");
         isConfirmed = true;
