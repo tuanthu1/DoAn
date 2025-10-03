@@ -10,25 +10,17 @@ export default async function handler(req, res) {
       method: "POST",
       headers: {
         "accept": "application/json",
-        "api-key": "process.env.BREVO_API_KEY",
+        "api-key": process.env.BREVO_API_KEY,
         "content-type": "application/json"
       },
       body: JSON.stringify({
         sender: { name: "Đặt Vé Xem Phim" },
-              to: [{ email: email }],
-              subject: `Xác nhận vé xem phim: ${ve.tenphim}`,
-              htmlContent: `
-                <h2>Xin chào ${ve.tenkhachhang}</h2>
-                <p>Bạn đã đặt vé thành công cho bộ phim <b>${ve.tenphim}</b>.</p>
-                <p><b>Số lượng vé:</b> ${ve.soluongve}</p>
-                <p><b>Tổng tiền:</b> ${ve.tongtien}.000 VND</p>
-                <hr/>
-                <p>Bạn có thể xem/chỉnh sửa thông tin tại:
-                  <a href="https://${window.location.host}/trangchinhsua.html?email=${encodeURIComponent(email)}">Trang chỉnh sửa</a>
-                </p>
-              `
+        to: [{ email: to }],
+        subject,
+        htmlContent: html
       })
     });
+
 
     if (!response.ok) {
       const error = await response.text();
@@ -43,4 +35,5 @@ export default async function handler(req, res) {
 });
 
 app.listen(3000, () => console.log("Server running on port 3000"));
+
 
