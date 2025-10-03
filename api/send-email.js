@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
   // Cấu hình CORS
-  res.setHeader("Access-Control-Allow-Origin", "https://tuanthu1.is-a.dev");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
@@ -31,3 +31,4 @@ export default async function handler(req, res) {
     res.status(500).json({ error: err.message });
   }
 }
+
