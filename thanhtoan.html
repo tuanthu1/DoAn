@@ -416,13 +416,7 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(ve)
           })
-          const urlParams = new URLSearchParams(window.location.search);
-            const hoten = urlParams.get("tenkhachhang");
-            const email = email;
-            const tenphim = urlParams.get("tenphim");
-            const giave = parseInt(urlParams.get("giave"));
-            const soluong = parseInt(urlParams.get("soluong"));
-            const tongtien = giave * soluong;
+          
           
             fetch("https://api.brevo.com/v3/smtp/email", {
             method: "POST",
