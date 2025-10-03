@@ -1,39 +1,26 @@
+import fetch from "node-fetch";
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
-
-  const { to, subject, html } = req.body;
 
   try {
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
       headers: {
         "accept": "application/json",
-        "api-key": process.env.BREVO_API_KEY,
-        "content-type": "application/json"
+        "content-type": "application/json",
+        "api-key": process.env.BREVO_API_KEY, 
       },
-      body: JSON.stringify({
-        sender: { name: "Đặt Vé Xem Phim" },
-        to: [{ email: to }],
-        subject,
-        htmlContent: html
-      })
+      body: JSON.stringify(req.body),
     });
 
-
-    if (!response.ok) {
-      const error = await response.text();
-      return res.status(500).send(error);
-    }
-
-    res.status(200).send("Email sent!");
+    const data = await response.json();
+    res.status(200).json(data);
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
+    res.status(500).json({ error: err.message });
   }
-});
-
-app.listen(3000, () => console.log("Server running on port 3000"));
+}
 
 
