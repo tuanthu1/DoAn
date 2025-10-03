@@ -436,16 +436,12 @@
                 <p><b>Tổng tiền:</b> ${ve.tongtien}.000 VND</p>
                 <hr/>
                 <p>Bạn có thể xem/chỉnh sửa thông tin tại:
-                  <a href="https://${window.location.host}/trangchinhsua.html?email=${encodeURIComponent(email)}">Trang chỉnh sửa</a>
+                  <a href="https://$https://tuanthu1.is-a.dev/DoAn/trangchinhsua.html?email=${encodeURIComponent(email)}">Trang chỉnh sửa</a>
                 </p>
               `
             })
           })
           .then(res => res.json())
-          .then(data => {
-            console.log("Kết quả gửi mail:", data);
-            alert("Thanh toán thành công! Email đã được gửi.");
-          })
           .catch(err => console.error("Lỗi gửi mail:", err));
         }
       </script>
