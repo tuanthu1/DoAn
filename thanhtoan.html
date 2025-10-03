@@ -420,8 +420,11 @@
           
             fetch("https://api.brevo.com/v3/smtp/email", {
             method: "POST",
-            eval(function(p,a,c,k,e,d){e=function(c){return c.toString(36)};if(!''.replace(/^/,String)){while(c--){d[c.toString(a)]=k[c]||c.toString(a)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('a:{"9":"1/0","8-7":"6-5-4","3-2":"1/0"},',11,11,'json|application|type|content|MFUxy4PH8lwC0M2V|d169e17e37ae4e3ac3b687c14e01d3632419f359596cdc5f46d6c7b3908ba3a6|xkeysib|key|api|accept|headers'.split('|'),0,{}))
-
+            headers: {
+              "accept": "application/json",
+              "api-key": "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",
+              "content-type": "application/json"
+            },
             body: JSON.stringify( {
               sender: { name: "Đặt Vé Xem Phim" },
               to: [{ email: email }],
