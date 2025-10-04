@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <link rel="stylesheet" href="https://api.vietqr.io/v2/generate">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Quicksand:wght@400;700&display=swap">
   <style>
@@ -252,6 +253,7 @@
           <a href="https://zalopay.vn/"><img src="/DoAn/img/zlpay.jpg" alt="ZaloPay"></a>
         </div>
       </div>
+      <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
       <script>
         document.getElementById("payment").style.display = "none";
         document.getElementById("showPaymentInfo").style.display = "block";
@@ -288,33 +290,13 @@
         document.getElementById("sodt").innerText = sodt;
         document.getElementById("email").innerText = email;
         let isConfirmed = false;
-        // Thêm mã QR chuyển khoản
-        function generateQRCode() {
-          const account = "54320052911"; // tên chủ tài khoản
-          const bank = document.getElementById("bank").value;
-          const amount = tongTien * 1000; // số tiền tính bằng VND
-          const content = hoten;
-          // Sử dụng API qrserver để tạo mã QR
-          const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=STK:${account};NH:${bank};AMT:${amount};ND:${content}`;
-          let qrDiv = document.getElementById("qrdiv");
-          if (!qrDiv) {
-            qrDiv = document.createElement("div");
-            qrDiv.id = "qrdiv";
-            qrDiv.style.textAlign = "center";
-            qrDiv.style.marginTop = "20px";
-            document.getElementById("payment").appendChild(qrDiv);
-          }
-          qrDiv.innerHTML = `<p><strong>Quét mã QR để chuyển khoản:</strong></p><img src="${qrUrl}" alt="QR chuyển khoản" style="border:1px solid #ccc; border-radius:8px;">`;
-        }
+        
 
         // Hiển thị QR khi chọn ngân hàng 
         function validateBankSelection() {
           const bank = document.getElementById("bank").value;
           const qrDivId = "qrdiv";
           let qrDiv = document.getElementById(qrDivId);
-
-          // Xóa thông báo lỗi nếu có
-          document.getElementById("thongbao").innerText = "";
 
           if (!bank) {
             if (qrDiv) qrDiv.innerHTML = "";
@@ -325,7 +307,7 @@
           const accountNumber = "54320052911"; // số tài khoản hiển thị trên trang
           const accountName = "Hoàng Tuấn Thư";
           const amountVnd = tongTien * 1000; // tongTien đã là số (nghìn VND), nhân ra VND
-          const message = `${hoten}`; // nội dung chuyền khoản đề nghị
+          const message = `${sodt}`; // nội dung chuyền khoản đề nghị
 
           // Tạo URL tới API 
           const params = new URLSearchParams({
@@ -369,10 +351,8 @@
         //xác nhận thanh toán
 
         function xacNhan() {
-          const nullop = document.getElementById("none");
           const bankSelect = document.getElementById("bank");
           if (!bankSelect.value) {
-            // nếu không chọn ngân hàng
             document.getElementById("thongbao").innerText = "Vui lòng chọn ngân hàng để tiếp tục.";
             document.getElementById("thongbao").style.color = "red";
             document.getElementById("payment").scrollIntoView({ behavior: "smooth" });
@@ -380,10 +360,12 @@
           } else {
             document.getElementById("thongbao").innerText = "";
           }
-          const params = new URLSearchParams(window.location.search);
-          const marap = params.get("tenrap"); // ví dụ: beta-my-dinh
 
-          fetch("https://67f8cb2d2466325443edd5a7.mockapi.io/rapphim") // path tới JSON
+          const params = new URLSearchParams(window.location.search);
+          const marap = params.get("tenrap");
+
+          // lấy tên rạp
+          fetch("https://67f8cb2d2466325443edd5a7.mockapi.io/rapphim")
             .then(res => res.json())
             .then(data => {
               const matched = data.find(r => r.value === marap);
@@ -397,7 +379,7 @@
               console.error("Không tải được danh sách rạp:", err);
             });
 
-
+          // dữ liệu vé
           const ve = {
             tenkhachhang: hoten,
             sodt: sodt,
@@ -411,37 +393,41 @@
             tongtien: tongTien + ".000 VND",
             trangthai: "✅Đã thanh toán",
           };
-          fetch('https://67f8cc292466325443edda28.mockapi.io/datve', {
-            method: 'POST',
+
+          // lưu vé vào mockapi
+          fetch("https://67f8cc292466325443edda28.mockapi.io/datve", {
+            method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(ve)
           })
-          
-          
-            fetch("https://your-vercel-app.vercel.app/api/send-email", {
-            method: "POST",
-            headers: {
-              "content-type": "application/json"
-            },
-            body: JSON.stringify( {
-              sender: { name: "Đặt Vé Xem Phim" },
-              to: [{ email: email }],
-              subject: `Xác nhận vé xem phim: ${ve.tenphim}`,
-              htmlContent: `
-                <h2>Xin chào ${ve.tenkhachhang}</h2>
-                <p>Bạn đã đặt vé thành công cho bộ phim <b>${ve.tenphim}</b>.</p>
-                <p><b>Số lượng vé:</b> ${ve.soluongve}</p>
-                <p><b>Tổng tiền:</b> ${ve.tongtien}.000 VND</p>
-                <hr/>
-                <p>Bạn có thể xem/chỉnh sửa thông tin tại:
-                  <a href="https://$https://tuanthu1.is-a.dev/DoAn/trangchinhsua.html?email=${encodeURIComponent(email)}">Trang chỉnh sửa</a>
-                </p>
-              `
+            .then(() => {
+              emailjs.init("3X7NOvUXAKHTahyMC");
+              return emailjs.send("service_mplycfn", "template_7mgvr97", {
+                tenkhachhang: hoten,
+                tenphim: tenphim,
+                ghe: gheArr.join(","),
+                soluong: gheArr.length,
+                tongtien: tongTien + ".000",
+                chinhsua_url: window.location.origin + "/trangchinhsua.html?" + params.toString(),
+                email: email
+              });
             })
-          })
-          .then(res => res.json())
-          .catch(err => console.error("Lỗi gửi mail:", err));
+            .then(response => {
+              alert("Cảm ơn bạn đã đặt vé, thông tin vé đã được gửi về email: " + email);
+              console.log("SUCCESS!", response.status, response.text);
+              document.getElementById("thongbao").innerText =
+                "Thanh toán thành công! Cảm ơn bạn đã đặt vé, chúng tôi sẽ liên hệ với bạn qua số điện thoại.";
+              document.getElementById("thongbao").style.color = "green";
+              window.location.href = "index.html";
+
+            })
+            .catch(error => {
+              alert("Chúng tôi không thể gửi vé đến email của bạn. Vui lòng kiểm tra lại địa chỉ email.");
+              console.error("FAILED...", error);
+            });
         }
+
+
       </script>
 
 </body>
