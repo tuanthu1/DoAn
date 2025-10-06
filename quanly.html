@@ -61,6 +61,7 @@
         input[type="number"],
         input[type="password"],
         input[type="datetime-local"],
+        input[type="date"],
         select {
             width: calc(100% - 20px);
             padding: 10px;
@@ -262,12 +263,7 @@
         <div class="form-section" id="add-movie-section">
             <h2>Thêm phim</h2>
             <form id="Vephim">
-                <div class="form-group">
-                    <label for="rapphim">Rạp Phim:</label>
-                        <select id="rapphim" name="rapphim" required>
-                        <!-- Options sẽ được thêm động bằng JS -->
-                    </select>
-                </div>
+                
                 <div class="form-group">
                     <label for="loaiphim">Loại Phim:</label>
                         <select id="loaiphim" name="loaiphim" required>
@@ -280,11 +276,7 @@
                 </div>
                 <div class="form-group">
                     <label for="giochieu">Giờ chiếu:</label>
-                    <input type="datetime-local" id="giochieu" name="giochieu" required>
-                </div>
-                <div class="form-group">
-                    <label for="gioketthuc">Giờ kết thúc:</label>
-                    <input type="datetime-local" id="gioketthuc" name="gioketthuc" required>
+                    <input type="text" id="giochieu" name="giochieu" required>
                 </div>
                 <div class="form-group">
                     <label for="soluongghengoi">Số lượng ghế ngồi:</label>
@@ -306,6 +298,18 @@
                     <label for="poster">Poster:</label>
                     <input type="text" id="poster" name="poster" placeholder="Nhập URL của poster" required>
                 </div>
+                <div class="form-group">
+                    <label for="ngaychieu">Ngày chiếu: </label>
+                    <input type="date" id="ngaychieu" name="ngaychieu" required>
+                </div>
+                <div class="form-group">
+                    <label for="mota">Mô tả:</label>
+                    <input type="text" id="mota" name="mota" placeholder="Nhập mô tả phim" required>
+                </div>
+                <div class="form-group">
+                    <label for="thoiluong">Thời lượng: </label>
+                    <input type="text" id="thoiluong" name="thoiluong" placeholder="Nhập thời lượng phim (vd: 2h30')" required>
+                </div>
                 <button type="button" id="add-movie-btn">Thêm phim</button>
             </form>
             <p id="error"></p>
@@ -316,15 +320,16 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Rạp Phim</th>
                         <th>Loại Phim</th>
                         <th>Tên Phim</th>
                         <th>Giờ Chiếu</th>
-                        <th>Giờ Kết Thúc</th>
+                        <th>Thời Lượng</th>
+                        <th>Ngày Chiếu</th>
                         <th>Số Lượng Ghế Ngồi</th>
                         <th>Số Lượng Ghế Còn Trống</th>
                         <th>Giá Vé</th>
                         <th>Mã Phim</th>
+                        <th>Mô Tả</th>
                         <th>Poster</th>
                         <th>Hành động</th>
                     </tr>
@@ -346,9 +351,11 @@
                         <th>Tên rạp</th>
                         <th>Tên phim</th>
                         <th>Ghế</th>
+                        <th>Giờ chiếu</th>
                         <th>Số lượng</th>
                         <th>Giá vé</th>
                         <th>Ngày đặt vé</th>
+                        <th>Ngày chiếu</th>
                         <th>Tổng tiền</th>
                         <th>Trạng thái</th>
                         <th>Hành động</th>
@@ -608,15 +615,16 @@
                 for (var i = 0; i < data.length; i++) {
                     movieList.append(
                         `<tr>
-                            <td>${data[i].rapphim}</td>
                             <td>${data[i].loaiphim}</td>
                             <td>${data[i].tenphim}</td>
                             <td>${data[i].giochieu}</td>
-                            <td>${data[i].gioketthuc}</td>
+                            <td>${data[i].thoiluong}</td>
+                            <td>${data[i].ngaychieu}</td>
                             <td>${data[i].soluongghengoi}</td>
                             <td>${data[i].soluongghecontrong}</td>
                             <td>${data[i].giave}</td>
                             <td>${data[i].maphim}</td>
+                            <td>${data[i].mota}</td>
                             <td><img src="${data[i].poster}" alt="${data[i].tenphim}" style="max-width: 50px;"></td>
                             <td>
                                 <button class="action-btn edit-btn" onclick="editMovie('${data[i].id}')">Sửa</button>
@@ -641,10 +649,12 @@
                             <td>${ve.tenrap || 'N/A'}</td>
                             <td>${ve.tenphim || 'N/A'}</td>
                             <td>${ve.gheduocchon}</td>
-                            <td>${ve.soluongve}</td>
-                            <td>${ve.giave}</td>
+                            <td>${ve.giochieu || 'N/A'}</td>
+                            <td>${ve.soluongve || 'N/A'}</td>
+                            <td>${ve.giave}.000 VNĐ</td>
                             <td>${ve.ngaydatve || 'N/A'}</td>
-                            <td>${tongtien.toLocaleString()} VNĐ</td>
+                            <td>${ve.ngaychieu || 'N/A'}</td>
+                            <td>${tongtien.toLocaleString()}.000 VNĐ</td>
                             <td class="trangthai">${ve.trangthai || 'Chưa xác định'}</td>
                             <td>
                                 <button class="action-btn edit-btn btn-sua-trangthai">cập nhật trạng thái</button>
@@ -957,23 +967,27 @@
         loadTickets(); // Tải danh sách vé đã đặt khi trang được tải
                 });
         function validateInput() {
-
-            var rapphim = $('#rapphim').val().trim();
-            var loaiphim = $('#loaiphim').val().trim();
             var tenphim = $('#tenphim').val().trim();
             var giochieu = $('#giochieu').val().trim();
-            var gioketthuc = $('#gioketthuc').val().trim();
             var soluongghengoi = $('#soluongghengoi').val().trim();
             var soluongghecontrong = $('#soluongghecontrong').val().trim();
             var giave = $('#giave').val().trim();
             var maphim = $('#maphim').val().trim();
             var poster = $('#poster').val().trim();
-
-            if (rapphim === '') {
-                alert("Vui lòng nhập rạp phim.");
+            var ngaychieu = $('#ngaychieu').val().trim();
+            var mota = $('#mota').val().trim();
+            var thoiluong = $('#thoiluong').val().trim();
+            var loaiphim = $('#loaiphim').val().trim();
+            
+            if(maphim.length > 10) {
+                alert("Mã phim không được vượt quá 10 ký tự.");
                 return false;
             }
-            if( loaiphim === '') {
+            if(maphim.length < 1) {
+                alert("Mã phim phải có ít nhất 1 ký tự.");
+                return false;
+            }
+            if (loaiphim === '') {
                 alert("Vui lòng nhập loại phim.");
                 return false;
             }
@@ -983,10 +997,6 @@
             }
             if (giochieu === '') {
                 alert("Vui lòng nhập giờ chiếu.");
-                return false;
-            }
-            if(gioketthuc === '') {
-                alert("Vui lòng nhập giờ kết thúc.");
                 return false;
             }
             if (soluongghengoi === '') {
@@ -1009,6 +1019,27 @@
                 alert("Vui lòng nhập URL poster.");
                 return false;
             }
+            if (ngaychieu === '') {
+                alert("Vui lòng nhập ngày chiếu.");
+                return false;
+            }
+            if(mota === '') {
+                alert("Vui lòng nhập mô tả phim.");
+                return false;
+            }
+            if(thoiluong === '') {
+                alert("Vui lòng nhập thời lượng phim.");
+                return false;
+            }
+            if(ngaychieu) {
+                const selectedDate = new Date(ngaychieu);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0); // Đặt giờ phút giây về 0 để so sánh chỉ ngày
+                if (selectedDate < today) {
+                    alert("Ngày chiếu không được là ngày trong quá khứ.");
+                    return false;
+                }
+            }
             if (isNaN(soluongghengoi) || isNaN(soluongghecontrong) || isNaN(giave) || isNaN(maphim)) {
                 alert("Vui lòng nhập giá trị số hợp lệ cho số ghế, số ghế trống, giá vé và mã phim.");
                 return false;
@@ -1017,55 +1048,11 @@
                 alert("Các giá trị số phải lớn hơn 0.");
                 return false;
             }
-            if (new Date(giochieu) >= new Date(gioketthuc)) {
-                alert("Giờ chiếu phải trước giờ kết thúc.");
-                return false;
-            }
             if (!isValidURL(poster)) {
                 alert("Vui lòng nhập URL hợp lệ cho poster.");
                 return false;
             }
-            $.get("https://67f8c4ac2466325443edb69f.mockapi.io/Phim", function(movies) {
-                // Kiểm tra mã phim trùng
-                const maphim = $('#IdLoaiPhim').val().trim();
-                if (movies.some(movie => movie.maphim === maphim)) {
-                    $('#error').text("Mã phim đã tồn tại. Vui lòng nhập mã khác.");
-                    throw new Error("Mã phim trùng");
-                }
-                // Kiểm tra các trường bắt buộc
-                if ($('#movieTypeName').val().trim() === "") {
-                    $('#error').text("Thiếu tên phim.");
-                    throw new Error("Thiếu tên phim");
-                }
-                if ($('#giochieu').length && $('#giochieu').val().trim() === "") {
-                    $('#error').text("Thiếu giờ chiếu.");
-                    throw new Error("Thiếu giờ chiếu");
-                }
-                if ($('#gioketthuc').length && $('#gioketthuc').val().trim() === "") {
-                    $('#error').text("Thiếu giờ kết thúc.");
-                    throw new Error("Thiếu giờ kết thúc");
-                }
-                if ($('#loaiphim').length && $('#loaiphim').val().trim() === "") {
-                    $('#error').text("Thiếu loại phim.");
-                    throw new Error("Thiếu loại phim");
-                }
-                if ($('#soluongghengoi').length && $('#soluongghengoi').val().trim() === "") {
-                    $('#error').text("Thiếu số ghế.");
-                    throw new Error("Thiếu số ghế");
-                }
-                if ($('#soluongghecontrong').length && $('#soluongghecontrong').val().trim() === "") {
-                    $('#error').text("Thiếu số ghế trống.");
-                    throw new Error("Thiếu số ghế trống");
-                }
-                if ($('#giave').length && $('#giave').val().trim() === "") {
-                    $('#error').text("Thiếu giá vé.");
-                    throw new Error("Thiếu giá vé");
-                }
-                if ($('#poster').length && $('#poster').val().trim() === "") {
-                    $('#error').text("Thiếu poster.");
-                    throw new Error("Thiếu poster");
-                }
-            });
+             
             function isValidURL(string) {
                 try {
                     new URL(string);
@@ -1079,55 +1066,70 @@
             return true;
         }
         //Thêm phim
-        function addMovie() {
-            if (!validateInput()) {
-                return;
-            }
-
-            var formData = {
-                rapphim: $('#rapphim').val().trim(),
-                loaiphim: $('#loaiphim').val().trim(),
-                tenphim: $('#tenphim').val().trim(),
-                giochieu: $('#giochieu').val().trim(),
-                gioketthuc: $('#gioketthuc').val().trim(),
-                soluongghengoi: $('#soluongghengoi').val().trim(),
-                soluongghecontrong: $('#soluongghecontrong').val().trim(),
-                giave: $('#giave').val().trim(),
-                maphim: $('#maphim').val().trim(),
-                poster: $('#poster').val().trim()
-            };
-
-            $.ajax({
-                type: "POST",
-                url: "https://67f8c4ac2466325443edb69f.mockapi.io/Phim",
-                contentType: "application/json",
-                data: JSON.stringify(formData),
-                success: function() {
-                    
-                    $('#error').text("Thêm phim thành công.");
-                    loadMovies();
-                },
-                error: function() {
-                    alert('Đã xảy ra lỗi khi thêm phim.');
+        //Thêm phim
+                function addMovie() {
+                    if (!validateInput()) {
+                        return;
+                    }
+        
+                    var formData = {
+                        loaiphim: $('#loaiphim').val().trim(),
+                        tenphim: $('#tenphim').val().trim(),
+                        giochieu: $('#giochieu').val().trim(),
+                        thoiluong: $('#thoiluong').val().trim(),
+                        soluongghengoi: $('#soluongghengoi').val().trim(),
+                        soluongghecontrong: $('#soluongghecontrong').val().trim(),
+                        giave: $('#giave').val().trim(),
+                        maphim: $('#maphim').val().trim(),
+                        poster: $('#poster').val().trim(),
+                        ngaychieu: $('#ngaychieu').val().trim(),
+                        mota: $('#mota').val().trim()
+                    };
+        
+                    // Kiểm tra mã phim không trùng trước khi gửi POST
+                    $.get("https://67f8c4ac2466325443edb69f.mockapi.io/Phim", function(data) {
+                        var exists = data.some(function(item) {
+                            return String(item.maphim).trim() === formData.maphim;
+                        });
+        
+                        if (exists) {
+                            alert("Mã phim đã tồn tại. Vui lòng nhập mã khác.");
+                            return;
+                        }
+        
+                        // Nếu không trùng, thực hiện thêm phim
+                        $.ajax({
+                            type: "POST",
+                            url: "https://67f8c4ac2466325443edb69f.mockapi.io/Phim",
+                            contentType: "application/json",
+                            data: JSON.stringify(formData),
+                            success: function() {
+                                $('#error').text("Thêm phim thành công.");
+                                loadMovies();
+                                // Reset form after successful add
+                                $('#Vephim')[0].reset();
+                            },
+                            error: function() {
+                                alert('Đã xảy ra lỗi khi thêm phim.');
+                            }
+                        });
+                    }).fail(function() {
+                        alert("Không thể kiểm tra mã phim. Vui lòng kiểm tra kết nối.");
+                    });
                 }
-            });
-
-            // Reset form after adding
-            $('#Vephim')[0].reset();
-        }
-        // Sửa thông tin phim
         function editMovie(id) {
             $.get(`https://67f8c4ac2466325443edb69f.mockapi.io/Phim/${id}`, function(data) {
-                $('#rapphim').val(data.rapphim);
                 $('#loaiphim').val(data.loaiphim);
                 $('#tenphim').val(data.tenphim);
                 $('#giochieu').val(data.giochieu);
-                $('#gioketthuc').val(data.gioketthuc);
+                $('#thoiluong').val(data.thoiluong);
                 $('#soluongghengoi').val(data.soluongghengoi);
                 $('#soluongghecontrong').val(data.soluongghecontrong);
                 $('#giave').val(data.giave);
                 $('#maphim').val(data.maphim);
                 $('#poster').val(data.poster);
+                $('#ngaychieu').val(data.ngaychieu);
+                $('#mota').val(data.mota);
                 document.getElementById("add-movie-section").style.display = "block"; // Hiện form thêm phim
                 // Change button function to update
                 $('#add-movie-btn').text('Cập nhật phim').off('click').on('click', function() {
@@ -1142,37 +1144,50 @@
             }
 
             var formData = {
-                rapphim: $('#rapphim').val().trim(),
                 loaiphim: $('#loaiphim').val().trim(),
                 tenphim: $('#tenphim').val().trim(),
                 giochieu: $('#giochieu').val().trim(),
-                gioketthuc: $('#gioketthuc').val().trim(),
+                thoiluong: $('#thoiluong').val().trim(),
                 soluongghengoi: $('#soluongghengoi').val().trim(),
                 soluongghecontrong: $('#soluongghecontrong').val().trim(),
                 giave: $('#giave').val().trim(),
                 maphim: $('#maphim').val().trim(),
-                poster: $('#poster').val().trim()
+                poster: $('#poster').val().trim(),
+                ngaychieu: $('#ngaychieu').val().trim(),
+                mota: $('#mota').val().trim()
             };
 
-            $.ajax({
-                type: "PUT",
-                url: `https://67f8c4ac2466325443edb69f.mockapi.io/Phim/${id}`,
-                contentType: "application/json",
-                data: JSON.stringify(formData),
-                success: function() {
-                    loadMovies();
-                    alert('Cập nhật phim thành công!');
-                },
-                error: function() {
-                    alert('Đã xảy ra lỗi khi cập nhật phim.');
+            // Kiểm tra mã phim có trùng với phim khác (ngoại trừ chính phim đang sửa)
+            $.get("https://67f8c4ac2466325443edb69f.mockapi.io/Phim", function(data) {
+                var exists = data.some(function(item) {
+                    return String(item.maphim).trim() === formData.maphim && String(item.id) !== String(id);
+                });
+
+                if (exists) {
+                    alert("Mã phim đã tồn tại. Vui lòng nhập mã khác.");
+                    return;
                 }
+
+                // Thực hiện PUT để cập nhật phim
+                $.ajax({
+                    type: "PUT",
+                    url: `https://67f8c4ac2466325443edb69f.mockapi.io/Phim/${id}`,
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    success: function() {
+                        loadMovies();
+                        alert('Cập nhật phim thành công!');
+                        $('#Vephim')[0].reset();
+                        // Đổi nút về chức năng thêm phim
+                        $('#add-movie-btn').text('Thêm phim').off('click').on('click', addMovie);
+                    },
+                    error: function() {
+                        alert('Đã xảy ra lỗi khi cập nhật phim.');
+                    }
+                });
+            }).fail(function() {
+                alert("Không thể kiểm tra mã phim. Vui lòng kiểm tra kết nối.");
             });
-
-            // Reset form after updating
-            $('#Vephim')[0].reset();
-
-            // Change button function back to add after updating
-            $('#add-movie-btn').text('Thêm phim').off('click').on('click', addMovie);
         }
         // xóa phim
         function deleteMovie(id) {

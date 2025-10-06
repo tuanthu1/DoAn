@@ -3,13 +3,12 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link class="img" rel="icon" href="/DoAn/img/gcv.jpg" type="image/x-icon">
+  <link class="img" rel="icon" href="/img/gcv.jpg" type="image/x-icon">
   <title>Thanh Toán Vé Xem Phim</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <link rel="stylesheet" href="https://api.vietqr.io/v2/generate">
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Quicksand:wght@400;700&display=swap">
   <style>
@@ -195,13 +194,15 @@
       <p><span>Giá vé:</span> <span id="giave"></span></p>
       <p><span>Tổng tiền:</span> <span id="tongtien"></span> </p>
       <p><span>Tên rạp:</span> <span id="tenrap"></span></p>
+      <p><span>Giờ chiếu:</span> <span id="giochieu"></span></p>
+      <p><span>Ngày chiếu:</span> <span id="ngaychieu"></span></p>
 
     </div>
 
     <div class="payment-info" id="payment">
       <h3>Thông Tin Chuyển Khoản</h3>
       <p><strong>Chủ tài khoản:</strong> Hoàng Tuấn Thư</p>
-      <p><strong>Số tài khoản:</strong> 123456789001</p>
+      <p><strong>Số tài khoản:</strong> 54320052911</p>
 
       <label for="bank">Ngân hàng:</label>
       <select id="bank" class="form-control" required onchange="validateBankSelection()">
@@ -223,7 +224,7 @@
     <div class="footer-container">
       <!-- Logo -->
       <div class="footer-logo">
-        <a href="#"><img style="display: block; width: 100px; height:100px;" src="/DoAn/img/gcv.jpg" alt="MV Logo"></a>
+        <a href="#"><img style="display: block; width: 100px; height:100px;" src="/img/gcv.jpg" alt="MV Logo"></a>
       </div>
 
       <!-- Company Info -->
@@ -240,17 +241,17 @@
       <div class="footer-partners">
         <h3>ĐỐI TÁC</h3>
         <div class="partner-logos">
-          <a href="https://betacinemas.vn/"><img src="/DoAn/img/logobetacnm.png" alt="Beta Cinemas"></a>
-          <a href="https://www.megagscinemas.vn/"><img src="/DoAn/img/mega.jpg" alt="Mega GS"></a>
-          <a href="https://cinestar.com.vn/"><img src="/DoAn/img/cinesta.png" alt="Cinestar"></a>
-          <a href="https://dcine.vn/"><img src="/DoAn/img/dcine.png" alt="DCine"></a>
-          <a href="https://cinemaxvn.com/"><img src="/DoAn/img/cinemax.png" alt="Cinema"></a>
-          <a href="https://starlight.vn/"><img src="/DoAn/img/starlight.jpg" alt="Starlight"></a>
-          <a href="https://riocinema.vn/"><img src="/DoAn/img/rio.png" alt="Rio Cinemas"></a>
-          <a href="https://ddcinema.vn/"><img src="/DoAn/img/dd.jpg" alt="DDC"></a>
-          <a href="https://touchcinema.com/"><img src="/DoAn/img/touch.jpg" alt="Touch Cinema"></a>
-          <a href="https://momo.vn/"><img src="/DoAn/img/momo.png" alt="MoMo"></a>
-          <a href="https://zalopay.vn/"><img src="/DoAn/img/zlpay.jpg" alt="ZaloPay"></a>
+          <a href="https://betacinemas.vn/"><img src="/img/logobetacnm.png" alt="Beta Cinemas"></a>
+          <a href="https://www.megagscinemas.vn/"><img src="/img/mega.jpg" alt="Mega GS"></a>
+          <a href="https://cinestar.com.vn/"><img src="/img/cinesta.png" alt="Cinestar"></a>
+          <a href="https://dcine.vn/"><img src="/img/dcine.png" alt="DCine"></a>
+          <a href="https://cinemaxvn.com/"><img src="/img/cinemax.png" alt="Cinema"></a>
+          <a href="https://starlight.vn/"><img src="/img/starlight.jpg" alt="Starlight"></a>
+          <a href="https://riocinema.vn/"><img src="/img/rio.png" alt="Rio Cinemas"></a>
+          <a href="https://ddcinema.vn/"><img src="/img/dd.jpg" alt="DDC"></a>
+          <a href="https://touchcinema.com/"><img src="/img/touch.jpg" alt="Touch Cinema"></a>
+          <a href="https://momo.vn/"><img src="/img/momo.png" alt="MoMo"></a>
+          <a href="https://zalopay.vn/"><img src="/img/zlpay.jpg" alt="ZaloPay"></a>
         </div>
       </div>
       <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -264,8 +265,29 @@
           document.getElementById("showPaymentInfo").style.display = "none";
           var timeout = setTimeout(() => {
             document.getElementById("confirmPayment").style.display = "block";
-          }, 10000 + 10000);
+          }, 1000);
         }
+        // Lấy ngày chiếu
+        fetch("https://67f8c4ac2466325443edb69f.mockapi.io/Phim")
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            // giả sử API trả về mảng các phim, ví dụ mỗi phim có trường `ngayChieu` hoặc `ngay_chieu`
+            data.forEach(phim => {
+              console.log("Phim:", phim.tenPhim, "— Ngày chiếu:", phim.ngayChieu || phim.ngaychieu);
+            });
+            // nếu muốn hiển thị 1 phim cụ thể:
+            if (data.length > 0) {
+              const first = data[0];
+              const ngay = first.ngayChieu || first.ngaychieu || "Không có ngày chiếu";
+              document.getElementById("ngaychieu").innerText = ngay;
+            }
+          })
+          .catch(error => {
+            console.error("Lỗi khi gọi API:", error);
+            document.getElementById("ngaychieu").innerText = "Lỗi";
+          });
+
 
         const params = new URLSearchParams(window.location.search);
         const hoten = params.get("tenkhachhang") || "Người đặt";
@@ -275,6 +297,8 @@
         const rap = params.get("tenrap") || "Không rõ";
         const sodt = params.get("sodt") || "Không rõ";
         const email = params.get("email") || "Không rõ";
+        const giochieu = params.get("giochieu") || "Không rõ";
+        const ngaychieu = params.get("ngaychieu") || "Không rõ";
 
         const gheArr = ghe.split(",").filter(x => x.trim() !== "");
         const giaveNumber = parseInt(giave.replace(/\./g, "")) || 0;
@@ -286,12 +310,14 @@
         document.getElementById("soluong").innerText = gheArr.length;
         document.getElementById("giave").innerText = giave.toLocaleString() + ".000VND";
         document.getElementById("tongtien").innerText = tongTien.toLocaleString() + ".000VND";
-        document.getElementById("noidung").innerText = hoten;
         document.getElementById("sodt").innerText = sodt;
         document.getElementById("email").innerText = email;
-        let isConfirmed = false;
-        
+        document.getElementById("giochieu").innerText = giochieu;
+        document.getElementById("ngaychieu").innerText = ngaychieu;
 
+        let isConfirmed = false;
+
+        
         // Hiển thị QR khi chọn ngân hàng 
         function validateBankSelection() {
           const bank = document.getElementById("bank").value;
@@ -385,6 +411,8 @@
             sodt: sodt,
             email: email,
             tenphim: tenphim,
+            giochieu: giochieu,
+            ngaychieu: document.getElementById("ngaychieu").innerText || "Không rõ",
             gheduocchon: gheArr.join(","),
             soluongve: gheArr.length,
             giave: parseInt(giave),
@@ -408,6 +436,7 @@
                 ghe: gheArr.join(","),
                 soluong: gheArr.length,
                 tongtien: tongTien + ".000",
+                giochieu: giochieu,
                 chinhsua_url: window.location.origin + "/trangchinhsua.html?" + params.toString(),
                 email: email
               });
