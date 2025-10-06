@@ -1,102 +1,312 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link class="img" rel="icon" href="/img/gcv.jpg" type="image/x-icon">
     <title>Chi Tiết Phim</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
+        :root {
+            --main-bg: linear-gradient(135deg, #0097a7, #00bcd4, #80deea);
+            --header-bg: linear-gradient(90deg, #007b91, #00a8b5);
+            --card-bg: #ffffff;
+            --text-main: #002831;
+            --accent: #81d7dd;
+            --btn-dark: #002831;
+            --btn-light: #e0f7fa;
+            --border-color: #b2ebf2;
         }
+        body {
+            background: var(--main-bg);
+            color: var(--text-main);
+            font-family: "Roboto", sans-serif;
+            min-height: 100vh;
+            background-attachment: fixed;
+            /* cho hiệu ứng mượt */
+        }
+
+        header {
+            color: var(--main-bg);
+            background-color: var(--accent);
+            padding: 20px 0;
+        }
+
+        header .navbar-nav .nav-link {
+            color: #fff;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+        }
+
+        header .navbar-nav .nav-link:hover {
+            color: #ffc107;
+        }
+
         .container {
             width: 90%;
             max-width: 1200px;
             margin: auto;
             padding: 20px;
-            background-color: #fff;
+            background-color: var(--accent);
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
             margin-bottom: 50px;
             border-radius: 10px;
         }
+
         h2 {
             text-align: center;
             margin-bottom: 20px;
             color: #007bff;
         }
+
         .movie-info {
             text-align: center;
             margin-bottom: 20px;
         }
+
         .movie-info img {
-            max-width: 100%;
+            max-width: 200px;
             height: auto;
             margin-bottom: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-        }
-        input[type="text"],
-        input[type="number"],
-        input[type="email"],
-        select {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
+    position: relative;
+    margin-bottom: 25px;
+}
+
+/* Label ban đầu căn giữa */
+label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    color: #777;
+    font-size: 16px;
+    pointer-events: none;
+    transition: 0.25s ease all;
+}
+
+/* Ô nhập */
+input#soluongve {
+    width: 300px;
+}
+input#rapphim {
+    width: 300px;
+}   
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+select {
+    font-size: 16px;
+    padding: 12px 10px 10px 5px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+    outline: none;
+    background: transparent;
+    transition: border-color 0.25s ease;
+}
+
+/* Khi focus hoặc có giá trị */
+input:focus ~ label,
+input:not(:placeholder-shown) ~ label,
+select:focus ~ label,
+select:not([value=""]) ~ label {
+    top: -14px;
+    left: 0;
+    font-size: 13px;
+    color: #007bff; /* xanh khi focus */
+}
+
+/* Focus - màu xanh */
+input:focus,
+select:focus {
+    border-bottom: 2px solid #007bff;
+}
+input:invalid,
+select:invalid {
+    border-bottom: 2px solid #dc3545;
+}
+input:invalid ~ label,
+select:invalid ~ label {
+    color: #dc3545;
+}
+input:valid,
+select:valid {
+    border-bottom: 2px solid #00b894;
+}
+input:valid ~ label,
+select:valid ~ label {
+    color: #00b894;
+}
+/* Hiệu ứng viền */
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+select:focus {
+    border-bottom: 2px solid #007bff;
+}
+
+
+        
+
         button {
             padding: 12px 20px;
             background-color: #007bff;
-            color: #fff;
+            color: #fa6b6b;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s ease;
             font-size: 16px;
         }
+
         button:hover {
             background-color: #0056b3;
         }
-        #trangchu {
-            text-decoration: none;
-            padding: 12px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 16px;
-            display: inline-block;
-            margin-top: 10px;
+
+        .btn-101,
+        .btn-101 *,
+        .btn-101 :after,
+        .btn-101 :before,
+        .btn-101:after,
+        .btn-101:before {
+            border: 0 solid;
+            box-sizing: border-box;
         }
+
+        .btn-101 {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-appearance: button;
+            background-color: #fa9200;
+            background-image: none;
+            color: #e47f05;
+            font-size: 100%;
+            font-weight: 900;
+            line-height: 1.5;
+            margin: 0;
+            -webkit-mask-image: -webkit-radial-gradient(#000, #ffffff);
+            padding: 0;
+            text-transform: uppercase;
+        }
+
+        .btn-101:disabled {
+            cursor: default;
+        }
+
+        .btn-101:-moz-focusring {
+            outline: auto;
+        }
+
+        .btn-101 svg {
+            vertical-align: middle;
+        }
+
+        .btn-101 [hidden] {
+            display: none;
+        }
+
+        .btn-101 {
+            --thickness: 0.3rem;
+            --roundness: 1.2rem;
+            --color: #ff9d00;
+            --opacity: 0.6;
+            -webkit-backdrop-filter: blur(100px);
+            backdrop-filter: blur(100px);
+            background: none;
+            background: #ffc40033;
+            border: none;
+            border-radius: var(--roundness);
+            color: var(--color);
+            cursor: pointer;
+            display: block;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.8rem 3rem;
+            position: relative;
+        }
+
+        .btn-101:hover {
+            background: hsla(17, 96%, 62%, 0.3);
+            filter: brightness(1.2);
+        }
+
+        .btn-101:active {
+            --opacity: 0;
+            background: hsla(0, 0%, 100%, 0.1);
+        }
+
+        .btn-101 svg {
+            border-radius: var(--roundness);
+            display: block;
+            filter: url(#glow);
+            height: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+
+        .btn-101 rect {
+            fill: none;
+            stroke: var(--color);
+            stroke-width: var(--thickness);
+            rx: var(--roundness);
+            stroke-linejoin: round;
+            stroke-dasharray: 185%;
+            stroke-dashoffset: 80;
+            -webkit-animation: snake 2s linear infinite;
+            animation: snake 2s linear infinite;
+            -webkit-animation-play-state: paused;
+            animation-play-state: paused;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.2s;
+            width: 100%;
+        }
+
+        .btn-101:hover rect {
+            -webkit-animation-play-state: running;
+            animation-play-state: running;
+            opacity: var(--opacity);
+        }
+
+        @-webkit-keyframes snake {
+            to {
+                stroke-dashoffset: 370%;
+            }
+        }
+
+        @keyframes snake {
+            to {
+                stroke-dashoffset: 370%;
+            }
+        }
+
+
+
         #thongbao {
             text-align: center;
             margin-top: 15px;
             font-size: 16px;
         }
+
         .success-msg {
             color: green;
         }
+
         .error-msg {
             color: red;
         }
+
         .screen {
             background-color: #ff8989;
             height: 30px;
@@ -107,6 +317,7 @@
             font-weight: bold;
             border-radius: 4px;
         }
+
         .seats {
             display: grid;
             margin-top: 100px;
@@ -116,6 +327,7 @@
             margin-bottom: 15px;
             overflow-x: auto;
         }
+
         .seat {
             width: 50px;
             height: 50px;
@@ -127,24 +339,29 @@
             line-height: 50px;
             font-weight: bold;
         }
+
         .seat-wrapper {
             overflow-x: auto;
             width: 100%;
         }
+
         .seat.selected {
-            background-color: #4caf50;
+            background-color: #ff4224;
             color: white;
         }
+
         .seat.occupied {
             background-color: #4d4d4d !important;
             color: white;
             cursor: not-allowed;
         }
+
         .footer {
             background-color: #bfdfff;
             padding: 20px 0;
             width: 100%;
         }
+
         .footer-container {
             display: flex;
             align-items: center;
@@ -154,81 +371,99 @@
             padding: 0 20px;
             flex-wrap: wrap;
         }
+
         .footer-logo img {
             width: 50px;
             height: 50px;
             border-radius: 50%;
         }
+
         .footer-info {
             flex: 1;
             margin-left: 20px;
         }
+
         .footer-info h3 {
             font-size: 16px;
             color: #dddddd;
             margin-bottom: 10px;
             text-transform: uppercase;
         }
+
         .footer-info p {
             font-size: 14px;
             color: #ffffff;
             line-height: 1.5;
         }
+
         .footer-info p a {
             color: #ffffff;
         }
+
         .footer-partners {
             margin-left: 20px;
         }
+
         .footer-partners h3 {
             font-size: 16px;
             color: #ffffff;
             margin-bottom: 10px;
             text-transform: uppercase;
         }
+
         .partner-logos {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
         }
+
         .partner-logos img {
             width: 40px;
             height: 40px;
             border-radius: 50%;
         }
+
         .footer-certification img {
             margin-left: 60px;
             width: 100px;
             height: 40px;
         }
+
         @media (max-width: 1200px) {
             .container {
                 width: 98%;
                 padding: 10px;
             }
+
             .footer-container {
                 max-width: 1000px;
             }
+
             .seats {
                 grid-template-columns: repeat(15, 40px);
             }
+
             .seat {
                 width: 40px;
                 height: 40px;
                 line-height: 40px;
             }
         }
+
         @media (max-width: 900px) {
             .container {
                 width: 100%;
                 padding: 5px;
             }
+
             .footer-container {
                 max-width: 700px;
             }
+
             .seats {
                 grid-template-columns: repeat(10, 35px);
             }
+
             .seat {
                 width: 35px;
                 height: 35px;
@@ -236,28 +471,38 @@
                 font-size: 13px;
             }
         }
+
         @media (max-width: 768px) {
             .container {
                 width: 100%;
                 padding: 2vw;
             }
+
             .footer-container {
                 flex-direction: column;
                 align-items: flex-start;
                 max-width: 720px;
             }
-            .footer-logo, .footer-info, .footer-partners, .footer-certification {
+
+            .footer-logo,
+            .footer-info,
+            .footer-partners,
+            .footer-certification {
                 margin: 10px 0;
             }
+
             .footer-info {
                 margin-left: 0;
             }
+
             .partner-logos {
                 justify-content: flex-start;
             }
+
             .seats {
                 grid-template-columns: repeat(6, 30px);
             }
+
             .seat {
                 width: 30px;
                 height: 30px;
@@ -265,76 +510,218 @@
                 font-size: 11px;
             }
         }
+
         @media (max-width: 480px) {
             .container {
                 width: 100%;
                 padding: 1vw;
             }
+
             h2 {
                 font-size: 20px;
             }
+
             .movie-info img {
-                max-width: 90vw;
+                max-width: 50px;
             }
+
             .seats {
                 grid-template-columns: repeat(4, 24px);
                 gap: 4px;
             }
+
             .seat {
                 width: 24px;
                 height: 24px;
                 line-height: 24px;
                 font-size: 9px;
             }
-            button, #trangchu {
-                padding: 8px 10px;
-                font-size: 13px;
-            }
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+            pointer-events: auto;
+            transition: opacity 0.5s ease;
+        }
+
+        #text {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 425px;
+            height: 90px;
+            align-items: center;
+            justify-self: center;
+            border: 2px solid #00f3ff;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: rgb(51, 51, 51);
+            padding: 16px;
+
+        }
+
+        .partner-logos {
+            justify-content: flex-start;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #ebff7b !important;
+        }
+
+        .navbar-brand img {
+            width: 100px;
+            height: 100px;
+        }
+
+        #text {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 425px;
+            height: 90px;
+            align-items: center;
+            justify-self: center;
+            border: 2px solid #00f3ff;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: rgb(51, 51, 51);
+            padding: 16px;
+
         }
     </style>
-    </head>
-    <body>
-        <div class="container">
-            <h2>Chi Tiết Phim</h2>
-            <div class="movie-info" id="movie-info">
-                <!-- Thông tin phim sẽ được chèn vào đây -->
-            </div>
+</head>
+
+<body>
+    <header class=" bg-dark text-white custom-bg custom-text"
+        style="background-color: #00879c !important; color: #000000 !important;">
+        <div class="containerr">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <a class="navbar-brand" href="#"><img src="/DoAn/img/logo.png" alt=""></a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Trang Chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#movie-list">Phim Đang Chiếu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="rapchieuphim.html">Rạp Chiều Phim</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://fb.com/tuanthu2911/">Liên Hệ</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>Chi Tiết Phim</h2>
+        <div class="movie-info" id="movie-info">
+            <!-- Thông tin phim sẽ được chèn vào đây -->
+        </div>
         <form id="vePhimForm">
             <div class="form-group">
+                <input type="text" id="tenkhachhang" name="tenkhachhang" required placeholder=" ">
                 <label for="tenkhachhang">Tên khách hàng:</label>
-                <input type="text" id="tenkhachhang" name="tenkhachhang" required>
             </div>
             <div class="form-group">
+                <input type="number" id="sodt" name="sodt" min="0" max="10" required placeholder=" ">
                 <label for="sodt">Số điện thoại:</label>
-                <input type="number" id="sodt" name="sodt" min="0" max="10" required>
             </div>
             <div class="form-group">
+                <input type="email" id="email" name="email" required placeholder=" ">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
             </div>
             <div class="form-group">
-                <label for="soluongve">Số lượng vé:</label>
                 <input type="number" id="soluongve" name="soluongve" required>
+                <label for="soluongve">Số lượng vé:</label>
             </div>
             <div class="form-group">
+                <select type="none" id="rapphim" name="rapphim" required></select>
                 <label for="rapphhim">Chọn Rạp: </label>
-                <select id="rapphim" name="rapphim" required>
                     <!-- Các rạp sẽ được chèn vào đây -->
                 </select>
                 <p id="thongtinrapphim"></p>
             </div>
             <div class="form-group">
-                <label for="loaichongoi">Chọn chỗ ngồi:</label>
+                <select id="chongiochieu" name="chongiochieu" required></select>
+                <label for="chongiochieu">Chọn giờ chiếu: </label>
+                    <!-- giờ chiếu được chèn vào đây -->
+                </select>
+            </div>
+            <div class="form-group">
+                <h6 for="loaichongoi">Chọn chỗ ngồi:</h6>
                 <div class="screen">MÀN HÌNH</div>
+                <div style="writing-mode: vertical-rl; font-size: 15px;">Lối ra</div>
                 <div class="seat-wrapper">
-                <div class="seats" id="seat-container">
+                    <div class="seats" id="seat-container">
 
+                    </div>
                 </div>
             </div>
-            </div>
-              
-            <button type="button" onclick="datVe()">Đặt vé</button>
-            <button id="trangchu" onclick="window.location.href='index.html'">Trang chủ</button>
+
+            <!-- <button class="btn-45" ><span>Đặt vé</span></button> -->
+            <button class="btn-101" onclick="datVe()">
+                Đặt vé
+                <svg>
+                    <defs>
+                        <filter id="glow">
+                            <fegaussianblur result="coloredBlur" stddeviation="5"></fegaussianblur>
+                            <femerge>
+                                <femergenode in="coloredBlur"></femergenode>
+                                <femergenode in="coloredBlur"></femergenode>
+                                <femergenode in="coloredBlur"></femergenode>
+                                <femergenode in="SourceGraphic"></femergenode>
+                            </femerge>
+                        </filter>
+                    </defs>
+                    <rect />
+                </svg>
+            </button>
+
+            <!-- <button class="btn-45" id="trangchu" onclick="window.location.href='index.html'"><span>Trang chủ</span></button> -->
+            <button class="btn-101" onclick="window.location.href='index.html'">
+                Trnag chủ
+                <svg>
+                    <defs>
+                        <filter id="glow">
+                            <fegaussianblur result="coloredBlur" stddeviation="5"></fegaussianblur>
+                            <femerge>
+                                <femergenode in="coloredBlur"></femergenode>
+                                <femergenode in="coloredBlur"></femergenode>
+                                <femergenode in="coloredBlur"></femergenode>
+                                <femergenode in="SourceGraphic"></femergenode>
+                            </femerge>
+                        </filter>
+                    </defs>
+                    <rect />
+                </svg>
+            </button>
         </form>
 
         <div id="thongbao"></div>
@@ -344,22 +731,25 @@
         <div class="footer-container">
             <!-- Logo -->
             <div class="footer-logo">
-                <a href="#"><img style="display: block; width: 100px; height:100px;" src="/img/gcv.jpg" alt="MV Logo"></a>
+                <a href="#"><img style="display: block; width: 100px; height:100px;" src="/img/gcv.jpg"
+                        alt="MV Logo"></a>
             </div>
 
             <!-- Company Info -->
             <div class="footer-info">
                 <h3>CÔNG TY TNHH MONET</h3>
-                <p><strong>Số ĐKKD:</strong> 0314675756 - Nơi cấp: Sở kế hoạch và đầu tư Tp. Hồ Chí Minh - Đăng ký lần đầu ngày 01/11/2018</p>
+                <p><strong>Số ĐKKD:</strong> 0314675756 - Nơi cấp: Sở kế hoạch và đầu tư Tp. Hồ Chí Minh - Đăng ký lần
+                    đầu ngày 01/11/2018</p>
                 <p><strong>Địa chỉ:</strong> Hà Nội</p>
-                <p><strong>Về chúng tôi:</strong> <a href="#">Chính sách bảo mật</a> - <a href="#">Hỗ trợ</a> - <a href="#">Liên hệ</a></p>
+                <p><strong>Về chúng tôi:</strong> <a href="#">Chính sách bảo mật</a> - <a href="#">Hỗ trợ</a> - <a
+                        href="#">Liên hệ</a></p>
             </div>
 
             <!-- Partners -->
             <div class="footer-partners">
                 <h3>ĐỐI TÁC</h3>
                 <div class="partner-logos">
-                    <a href="https://betacinemas.vn/" ><img src="/img/logobetacnm.png" alt="Beta Cinemas"></a>
+                    <a href="https://betacinemas.vn/"><img src="/img/logobetacnm.png" alt="Beta Cinemas"></a>
                     <a href="https://www.megagscinemas.vn/"><img src="/img/mega.jpg" alt="Mega GS"></a>
                     <a href="https://cinestar.com.vn/"><img src="/img/cinesta.png" alt="Cinestar"></a>
                     <a href="https://dcine.vn/"><img src="/img/dcine.png" alt="DCine"></a>
@@ -372,183 +762,372 @@
                     <a href="https://zalopay.vn/"><img src="/img/zlpay.jpg" alt="ZaloPay"></a>
                 </div>
             </div>
-    <script>
-        $(document).ready(function() {
-            // Lấy thông tin từ URL
-            var urlParams = new URLSearchParams(window.location.search);
-            var tenphim = urlParams.get('tenphim');
-            var poster = urlParams.get('poster');
-            
-            var rapphim = urlParams.get('rapphim');
-            var giochieu = urlParams.get('giochieu');
-            var gioketthuc = urlParams.get('gioketthuc');
-            var soluongghengoi = urlParams.get('soluongghengoi');
-            var giave = urlParams.get('giave');
-            function validateInput() {
-                var tenkhachhang = $('#tenkhachhang').val(); // Lấy giá trị từ input tên khách hàng
-                var sodt = $('#sodt').val(); // Lấy giá trị từ input số điện thoại
-                var email = $('#email').val(); // Lấy giá trị từ input email
-                // Nếu tên khách hàng không nhập hoặc không hợp lệ, hiển thị thông báo lỗi
-                if (tenkhachhang.trim() === '') {
-                    $('#thongbao').html('<p class="error-msg">Tên của bạn không được để trống.</p>');
-                    return false;
-                }
-                // Nếu số dt không hợp lệ, hiển thị thông báo lỗi
-                if (isNaN(sodt) || sodt.length < 10 || sodt.length > 10) {
-                    $('#thongbao').html('<p class="error-msg">Số điện thoại phải có 10 số.</p>');
-                    return false;
-                }
-                // Nếu số dt không bắt đầu bằng "0", hiển thị thông báo lỗi
-                if (sodt.charAt(0) !== "0" && sodt.charAt(1) != "3") {
-                    $('#thongbao').html('<p class="error-msg">Số điện thoại không hợp lệ.</p>');
-                    return false;
-                }
-                // Nếu email không hợp lệ, hiển thị thông báo lỗi
-                if (!email.includes('@') || !email.includes('.')) {
-                    $('#thongbao').html('<p class="error-msg">Email không hợp lệ.</p>');
-                    return false;
-                }
-                // Nếu không chọn ghế, hiển thị thông báo lỗi
-                if (selectedSeats.length === 0) {
-                    $('#thongbao').html('<p class="error-msg">Vui lòng chọn ghế ngồi.</p>');
-                    return false;
-                }
-                var soluongve = parseInt($('#soluongve').val());
-                if (soluongve > totalSeats) {
-                    $('#thongbao').html('<p class="error-msg">Số lượng vé không được lớn hơn số lượng ghế ngồi.</p>');
-                    return false;
-                }
-                if (soluongve <= 0) {
-                    $('#thongbao').html('<p class="error-msg">Số lượng vé phải lớn hơn 0.</p>');
-                    return false;
-                }
-                if (soluongve > selectedSeats.length) {
-                    $('#thongbao').html('<p class="error-msg">Số lượng vé không được lớn hơn số ghế đã chọn.</p>');
-                    return false;
-                }
-                else {
-                    $('#thongbao').html('<p class="error-msg">Đặt vé thành công.</p>');
-                }
-                return true; // Trả về true nếu tất cả hợp lệ
-            }
-            function calculateDuration(start, end) {
-                                // start, end: ISO string (e.g. "2025-04-20T21:00")
-                                const startDate = new Date(start);
-                                const endDate = new Date(end);
-                                let diffMs = endDate - startDate;   
-                                if (isNaN(diffMs) || diffMs < 0) return "N/A";
-                                const diffMins = Math.floor(diffMs / 60000);
-                                const hours = Math.floor(diffMins / 60);
-                                const mins = diffMins % 60;
-                                return hours > 0 ? `${hours}: ${mins}0` : `${mins}0`;
-                            }
-            // Hiển thị thông tin phim
-            $('#movie-info').html(`
-                <img src="${decodeURIComponent(poster)}" alt="Poster Phim">
-                <h3>${tenphim}</h3>
-                <p>Giờ chiếu: ${giochieu}</p>
-                <p>Giờ kết thúc: ${gioketthuc}</p>
-                <p>Thời lượng: ${calculateDuration(giochieu, gioketthuc)}</p>
-                <p>Số lượng ghế ngồi: ${soluongghengoi}</p>
-                <p>Giá vé: ${giave}.000VNĐ</p>
-                
-            `);
-
-            // Điền thông tin phim vào các thẻ input
-            // ==== CHỌN GHẾ NGỒI ====
-            var totalSeats = parseInt(soluongghengoi);
-            var seatContainer = $('#seat-container');
-            var selectedSeats = [];
-
-            function generateSeats() {
-                seatContainer.empty();
-                var cols = 20;
-                var rows = Math.ceil(totalSeats / cols); // Tính số hàng dựa trên tổng số ghế và số cột
-                let seatCount = 0;
-
-                for (let r = 0; r < rows; r++) {
-                    let rowChar = String.fromCharCode(65 + r); // A, B, C...
-                    for (let c = 0; c < cols && seatCount < totalSeats; c++) {
-                        if (c === 9 || c === 10) { // Tạo khoảng trống ở giữa
-                            seatContainer.append('<div style="width:50px; height:50px;"></div>');
-                            continue;
+            <script>
+                $(document).ready(function () {
+                    // Lấy thông tin từ URL
+                    var urlParams = new URLSearchParams(window.location.search);
+                    var tenphim = urlParams.get('tenphim');
+                    var poster = urlParams.get('poster');
+                    var thoiluong = urlParams.get('thoiluong');
+                    var rapphim = urlParams.get('rapphim');
+                    var giochieu = urlParams.get('giochieu');
+                    var soluongghengoi = urlParams.get('soluongghengoi');
+                    var giave = urlParams.get('giave');
+                    var mota = urlParams.get('mota');
+                    function validateInput() {
+                        var tenkhachhang = $('#tenkhachhang').val(); // Lấy giá trị từ input tên khách hàng
+                        var sodt = $('#sodt').val(); // Lấy giá trị từ input số điện thoại
+                        var email = $('#email').val(); // Lấy giá trị từ input email
+                        // Nếu tên khách hàng không nhập hoặc không hợp lệ, hiển thị thông báo lỗi
+                        if (tenkhachhang.trim() === '') {
+                            $('#thongbao').html('<p class="error-msg">Tên của bạn không được để trống.</p>');
+                            return false;
                         }
-                        seatCount++;
-                        let seatId = `${rowChar}${c + 1}`;
-                        let seat = $('<div class="seat" ></div>').text(seatId);
-                        
-                        seat.click(function () {
-                            $(this).toggleClass('selected');
-                            if (selectedSeats.includes(seatId)) {
-                                selectedSeats = selectedSeats.filter(s => s !== seatId);
+                        // Nếu số dt không hợp lệ, hiển thị thông báo lỗi
+                        if (isNaN(sodt) || sodt.length < 10 || sodt.length > 10) {
+                            $('#thongbao').html('<p class="error-msg">Số điện thoại phải có 10 số.</p>');
+                            return false;
+                        }
+                        // Nếu số dt không bắt đầu bằng "0", hiển thị thông báo lỗi
+                        if (sodt.charAt(0) !== "0" && sodt.charAt(1) != "3") {
+                            $('#thongbao').html('<p class="error-msg">Số điện thoại không hợp lệ.</p>');
+                            return false;
+                        }
+                        // Nếu email không hợp lệ, hiển thị thông báo lỗi
+                        if (!email.includes('@') || !email.includes('.')) {
+                            $('#thongbao').html('<p class="error-msg">Email không hợp lệ.</p>');
+                            return false;
+                        }
+                        // Nếu không chọn ghế, hiển thị thông báo lỗi
+                        if (selectedSeats.length === 0) {
+                            $('#thongbao').html('<p class="error-msg">Vui lòng chọn ghế ngồi.</p>');
+                            return false;
+                        }
+                        var soluongve = parseInt($('#soluongve').val());
+                        if (soluongve > totalSeats) {
+                            $('#thongbao').html('<p class="error-msg">Số lượng vé không được lớn hơn số lượng ghế ngồi.</p>');
+                            return false;
+                        }
+                        if (soluongve <= 0) {
+                            $('#thongbao').html('<p class="error-msg">Số lượng vé phải lớn hơn 0.</p>');
+                            return false;
+                        }
+                        if (soluongve > selectedSeats.length) {
+                            $('#thongbao').html('<p class="error-msg">Số lượng vé không được lớn hơn số ghế đã chọn.</p>');
+                            return false;
+                        }
+                        else {
+                            $('#thongbao').html('<p class="error-msg">Đặt vé thành công.</p>');
+                        }
+                        return true; // Trả về true nếu tất cả hợp lệ
+                    }
+
+                    // Hiển thị thông tin phim
+                    var id = urlParams.get('id');
+                    if (id) {
+                        fetch(`https://67f8c4ac2466325443edb69f.mockapi.io/Phim/${id}`)
+                            .then(res => res.json())
+                            .then(phim => {
+                                $('#movie-info').html(`
+                                <img src="${phim.poster}" alt="Poster Phim">
+                                <h3>${phim.tenphim}</h3>
+                                <p>Thời lượng: ${phim.thoiluong}</p>
+                                <p>Số lượng ghế ngồi: ${phim.soluongghengoi}</p>
+                                <p>Giá vé: ${phim.giave}.000 VNĐ</p>
+                                <p>Mô tả: ${phim.mota}</p>
+                            `);
+                            })
+                            .catch(err => console.error("Lỗi load chi tiết phim:", err));
+                    }
+                    // Load danh sách rạp từ API và chọn rạp hiện tại
+
+                    // Điền thông tin phim vào các thẻ input
+                    // ==== CHỌN GHẾ NGỒI ====
+                    var totalSeats = parseInt(soluongghengoi);
+                    var seatContainer = $('#seat-container');
+                    var selectedSeats = [];
+                    var bookedSeats = [];
+                    var seatSizeDefault = 50;
+                    var gap = 8;
+                    var resizeTimer = null;
+                    var initialCols = null; // giữ cố định số cột sau lần vẽ đầu tiên
+
+                    function calculateCols() {
+                        var containerWidth = seatContainer.parent().width();
+                        var seatSize = seatSizeDefault;
+                        var cols = Math.floor((containerWidth + gap) / (seatSize + gap));
+                        if (cols < 1) cols = 1;
+                        if (cols > 20) cols = 20;
+                        // không trả về giá trị động sau khi đã khởi tạo initialCols
+                        return { cols: cols, seatSize: seatSize };
+                    }
+
+                    // Khi thay đổi kích thước cửa sổ, vẽ lại sơ đồ ghế (debounce)
+                    $(window).on('resize', function () {
+                        clearTimeout(resizeTimer);
+                        resizeTimer = setTimeout(function () {
+                            // Không thay đổi số cột đã khởi tạo ban đầu để "giữ nguyên ghế"
+                            generateSeats();
+                        }, 150);
+                    });
+
+                    function fetchBookedSeats() {
+                        var selectedRapName = $("#rapphim").length ? $("#rapphim option:selected").text() : null;
+                        var selectedGio = $("#chongiochieu").length ? $("#chongiochieu").val() : null;
+                        $.get("https://67f8cc292466325443edda28.mockapi.io/datve", function (data) {
+                            bookedSeats = [];
+                            data.forEach(function (b) {
+                                if (selectedRapName && b.tenrap && b.tenrap !== selectedRapName) return;
+                                if (selectedGio && b.giochieu && b.giochieu !== selectedGio) return;
+                                if (b.tenphim && tenphim && b.tenphim !== tenphim) return;
+                                if (b.gheduocchon) {
+                                    b.gheduocchon.split(',').forEach(function (s) {
+                                        var st = s.trim();
+                                        if (st) bookedSeats.push(st);
+                                    });
+                                }
+                            });
+                            generateSeats();
+                        }).fail(function () {
+                            console.warn('Không thể tải dữ liệu vé đã đặt, vẫn hiển thị sơ đồ ghế (không có ghế bị khoá).');
+                            bookedSeats = [];
+                            generateSeats();
+                        });
+                    }
+
+                    function generateSeats() {
+                        seatContainer.empty();
+                        var calc = calculateCols();
+                        // Thiết lập initialCols một lần để giữ nguyên cấu trúc ghế
+                        if (initialCols === null) {
+                            // Nếu tổng ghế nhỏ hơn số cột tính được, dùng totalSeats làm cols để tránh hàng trống
+                            initialCols = Math.min(calc.cols, Math.max(1, Math.min(20, totalSeats)));
+                        }
+                        var cols = initialCols;
+                        var seatSize = calc.seatSize;
+
+                        // Tạo "lối đi" ở giữa: chia cột thành 2 phần (trái/phải)
+                        if (cols <= 1) {
+                            // Trường hợp 1 cột: vẽ bình thường theo 1 grid
+                            seatContainer.css({
+                                'display': 'grid',
+                                'grid-template-columns': `repeat(${cols}, ${seatSize}px)`,
+                                'gap': `${gap}px`,
+                                'justify-content': 'start'
+                            });
+                        } else {
+                            // Sử dụng flex để chia 2 nhóm ghế và lối đi ở giữa
+                            seatContainer.css({
+                                'display': 'flex',
+                                'align-items': 'start',
+                                'gap': `${gap}px`
+                            });
+                        }
+
+                        var leftCols = Math.floor(cols / 2);
+                        var rightCols = cols - leftCols;
+                        // Nếu leftCols == 0 (cols==1), đặt leftCols=cols để vẽ đúng
+                        if (leftCols === 0) leftCols = cols, rightCols = 0;
+
+                        var rows = Math.ceil(totalSeats / cols);
+                        var seatCount = 0;
+
+                        // Helper để tạo một seat element
+                        function createSeatElement(seatId) {
+                            var seat = $('<div class="seat"></div>')
+                                .text(seatId)
+                                .css({
+                                    'width': `${seatSize}px`,
+                                    'height': `${seatSize}px`,
+                                    'line-height': `${seatSize}px`,
+                                    'box-sizing': 'border-box'
+                                });
+
+                            if (bookedSeats.includes(seatId)) {
+                                seat.addClass('occupied');
+                                seat.attr('title', 'Ghế đã được đặt');
                             } else {
-                                selectedSeats.push(seatId);
+                                seat.click((function (id) {
+                                    return function () {
+                                        if ($(this).hasClass('occupied')) {
+                                            $('#thongbao').html('<p class="error-msg">Ghế đã được đặt. Vui lòng chọn ghế khác.</p>');
+                                            return;
+                                        }
+                                        $(this).toggleClass('selected');
+                                        if (selectedSeats.includes(id)) {
+                                            selectedSeats = selectedSeats.filter(s => s !== id);
+                                        } else {
+                                            selectedSeats.push(id);
+                                        }
+                                        $('#soluongve').val(selectedSeats.length);
+                                        $('#thongbao').html('');
+                                    };
+                                })(seatId));
                             }
-                            $('#soluongve').val(selectedSeats.length); // cập nhật ô số vé
+
+                            // Nếu ghế đã được chọn trước đó và không bị booked, đánh dấu selected lại sau khi redraw
+                            if (selectedSeats.includes(seatId) && !bookedSeats.includes(seatId)) {
+                                seat.addClass('selected');
+                            }
+                            return seat;
+                        }
+
+                        if (cols <= 1) {
+                            // 1 cột: vẽ theo hàng dọc
+                            for (var r = 0; r < rows; r++) {
+                                var rowChar = String.fromCharCode(65 + r);
+                                for (var c = 1; c <= cols && seatCount < totalSeats; c++) {
+                                    seatCount++;
+                                    var seatId = rowChar + c;
+                                    seatContainer.append(createSeatElement(seatId));
+                                }
+                            }
+                        } else {
+                            // Tạo left grid
+                            var leftGrid = $('<div class="seat-side left-side"></div>').css({
+                                'display': 'grid',
+                                'grid-template-columns': `repeat(${leftCols}, ${seatSize}px)`,
+                                'gap': `${gap}px`
+                            });
+                            // Tạo aisle (lối đi) ở giữa
+                            var aisleWidth = Math.max(20, Math.round(seatSize * 0.6) + gap);
+                            var aisle = $('<div class="aisle"></div>').css({
+                                'width': `${aisleWidth}px`,
+                                'display': 'flex',
+                                'align-items': 'center',
+                                'justify-content': 'center',
+                                'color': '#666',
+                                'font-size': '12px'
+                            }).text('LỐI ĐI').css('writing-mode', ' vertical-rl');
+
+                            // Tạo right grid (nếu có)
+                            var rightGrid = $('<div class="seat-side right-side"></div>').css({
+                                'display': 'grid',
+                                'grid-template-columns': `repeat(${rightCols}, ${seatSize}px)`,
+                                'gap': `${gap}px`
+                            });
+
+                            // Đưa các seat vào leftGrid và rightGrid hàng theo hàng để giữ dạng rạp
+                            for (var r = 0; r < rows; r++) {
+                                var rowChar = String.fromCharCode(65 + r);
+                                for (var c = 1; c <= cols && seatCount < totalSeats; c++) {
+                                    seatCount++;
+                                    var seatId = rowChar + c;
+                                    var seatEl = createSeatElement(seatId);
+                                    // Nếu c thuộc phần trái
+                                    if (c <= leftCols) {
+                                        leftGrid.append(seatEl);
+                                    } else {
+                                        rightGrid.append(seatEl);
+                                    }
+                                }
+                            }
+
+                            // Nếu rightCols == 0 chỉ append leftGrid
+                            if (rightCols === 0) {
+                                seatContainer.append(leftGrid);
+                            } else {
+                                seatContainer.append(leftGrid);
+                                seatContainer.append(aisle);
+                                seatContainer.append(rightGrid);
+                            }
+                        }
+
+                        // Nếu có ghế đã chọn mà sau này dữ liệu booked làm khoá ghế đó, loại bỏ khỏi selectedSeats
+                        selectedSeats = selectedSeats.filter(s => !bookedSeats.includes(s));
+                        $('#soluongve').val(selectedSeats.length);
+                    }
+
+                    // Khi thay đổi rạp hoặc giờ chiếu, tải lại danh sách ghế đã đặt và vẽ lại
+                    $(document).on('change', '#rapphim, #chongiochieu', function () {
+                        fetchBookedSeats();
+                    });
+
+                    // Khởi tạo: tải danh sách ghế đã đặt rồi vẽ sơ đồ
+                    fetchBookedSeats();
+                    // Đặt vé
+                    $.get("https://67f8cb2d2466325443edd5a7.mockapi.io/rapphim", function (data) {
+                        var select = $("#rapphim");
+                        select.empty(); // Xóa các option cũ nếu có
+                        data.forEach(function (rap) {
+                            select.append(`<option value="${rap.value}">${rap.ten}</option>`);
+                        });
+                        select.change(function () {
+                            var selectedRap = $(this).val();
+                            var rapInfo = data.find(rap => rap.value === selectedRap);
+                            $('#thongtinrapphim').text(`Địa chỉ: ${rapInfo.dia_chi}`);
                         });
 
-                        seatContainer.append(seat);
-                    }
-                }
-            }
-            generateSeats();
-            // Đặt vé
-            $.get("https://67f8cb2d2466325443edd5a7.mockapi.io/rapphim", function(data) {
-                var select = $("#rapphim");
-                select.empty(); // Xóa các option cũ nếu có
-                data.forEach(function(rap) {
-                    select.append(`<option value="${rap.value}">${rap.ten}</option>`);
-                });
-                select.change(function() {
-                    var selectedRap = $(this).val();
-                    var rapInfo = data.find(rap => rap.value === selectedRap);
-                    $('#thongtinrapphim').text(`Địa chỉ: ${rapInfo.dia_chi}`);
-                });
+                    }).fail(function () {
+                        alert('Không thể tải dữ liệu rạp phim. Vui lòng kiểm tra kết nối hoặc server.');
+                    });
+                    $.get("https://67f8c4ac2466325443edb69f.mockapi.io/Phim", function (data) {
+                        var select = $("#chongiochieu");
+                        select.empty(); // Xóa các option cũ nếu có
+                        var seen = new Set();
+                        data.forEach(function (phim) {
+                            if (phim.tenphim === tenphim && phim.giochieu) {
+                                // Tách chuỗi giờ chiếu theo dấu phẩy, chấm phẩy, khoảng trắng hoặc dấu |
+                                var parts = String(phim.giochieu).split(/[,\s;|]+/);
+                                parts.forEach(function (time) {
+                                    time = time.trim();
+                                    if (time && !seen.has(time)) {
+                                        seen.add(time);
+                                        select.append(`<option value="${time}">${time}</option>`);
+                                    }
+                                });
+                            }
+                        });
+                        if (select.children().length === 0) {
+                            select.append('<option value="">Không có giờ chiếu</option>');
+                        }
+                    }).fail(function () {
+                        alert('Không thể tải dữ liệu giờ chiếu. Vui lòng kiểm tra kết nối hoặc server.');
+                    });
+                    window.datVe = function () {
+                        if (!validateInput()) {
+                            return;
+                        }
+                        var tenkhachhang = $('#tenkhachhang').val();
+                        var sodt = $('#sodt').val();
+                        var email = $('#email').val();
+                        var soluongve = $('#soluongve').val();
+                        var giochieu = $('#chongiochieu').val();
 
-            }).fail(function() {
-                alert('Không thể tải dữ liệu rạp phim. Vui lòng kiểm tra kết nối hoặc server.');
-            });
-           
-            window.datVe = function() {
-                if(!validateInput()) {
-                    return;
-                }
-                var tenkhachhang = $('#tenkhachhang').val();
-                var sodt = $('#sodt').val();
-                var email = $('#email').val();
-                var soluongve = $('#soluongve').val();
-            
-                if (tenkhachhang.trim() === '' || soluongve <= 0 || sodt.trim() === '' || email.trim() === '') {
-                    $('#thongbao').html('<p class="error-msg">Vui lòng nhập đầy đủ thông tin.</p>');
-                    return;
-                }
-            
-                $.ajax({
-                    type: 'POST',
-                    url: 'https://67f8cc292466325443edda28.mockapi.io/datve',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        tenkhachhang: tenkhachhang,
-                        sodienthoai: sodt,
-                        email: email,
-                        soluongve: soluongve,
-                        tenrap: $("#rapphim option:selected").text(),
-                        gheduocchon: selectedSeats.join(', ')
-                    }),
-                    success: function(response) {
-                        const selectedRapTen = $("#rapphim option:selected").text();
-                        window.location.href = `thanhtoan.html?tenkhachhang=${encodeURIComponent(tenkhachhang)}&giave=${encodeURIComponent(giave)}&tenphim=${encodeURIComponent(tenphim)}&tenrap=${encodeURIComponent(selectedRapTen)}&soluong=${encodeURIComponent(soluongve)}&ghe=${encodeURIComponent(selectedSeats.join(','))}&sodt=${encodeURIComponent(sodt)}&email=${encodeURIComponent(email)}&sodt=${sodt}&email=${email}`;
-                    },
-                    error: function(xhr, status, error) {
-                        $('#thongbao').html('<p class="error-msg">Đặt vé thất bại. Vui lòng thử lại sau.</p>');
-                    }
+                        if (tenkhachhang.trim() === '' || soluongve <= 0 || sodt.trim() === '' || email.trim() === '' || !giochieu) {
+                            $('#thongbao').html('<p class="error-msg">Vui lòng nhập đầy đủ thông tin.</p>');
+                            return;
+                        }
+
+                        $.ajax({
+                            type: 'POST',
+                            url: 'https://67f8cc292466325443edda28.mockapi.io/datve',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                tenkhachhang: tenkhachhang,
+                                sodienthoai: sodt,
+                                email: email,
+                                soluongve: soluongve,
+                                tenrap: $("#rapphim option:selected").text(),
+                                gheduocchon: selectedSeats.join(', '),
+                                giochieu: giochieu,
+                            }),
+                            success: function (response) {
+                                const selectedRapTen = $("#rapphim option:selected").text();
+                                window.location.href = `thanhtoan.html?tenkhachhang=${encodeURIComponent(tenkhachhang)}&giave=${encodeURIComponent(giave)}&tenphim=${encodeURIComponent(tenphim)}&tenrap=${encodeURIComponent(selectedRapTen)}&soluong=${encodeURIComponent(soluongve)}&ghe=${encodeURIComponent(selectedSeats.join(','))}&giochieu=${encodeURIComponent(giochieu)}&sodt=${encodeURIComponent(sodt)}&email=${encodeURIComponent(email)}`;
+                            },
+                            error: function (xhr, status, error) {
+                                $('#thongbao').html('<p class="error-msg">Đặt vé thất bại. Vui lòng thử lại sau.</p>');
+                            }
+                        });
+                    };
+
+
+
                 });
-            };
-            
-            
-            
-        });
-    </script>
+            </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
-``` 
